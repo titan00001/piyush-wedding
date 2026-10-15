@@ -1,0 +1,17 @@
+# Cloudflare Pages — static Vite build served from dist/
+# Docs: https://developers.cloudflare.com/pages/
+#
+# First-time / dashboard deploy:
+#   - Framework preset: Vite
+#   - Build command: yarn build
+#   - Build output directory: dist
+#   - Root directory: /  (this repo is the app)
+#   - Environment variable (Production, and rebuild): VITE_SITE_URL=https://<your-domain>
+#   - Optional: NODE_VERSION=24
+#
+# CLI deploy (after yarn build):
+#   yarn deploy
+
+name = "piyush-priya-wedding"
+compatibility_date = "2025-10-15"
+pages_build_output_dir = "dist"
