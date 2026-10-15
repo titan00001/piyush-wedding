@@ -1,4 +1,4 @@
-import type { EventId } from '../config/wedding'
+import type { EventId, FamilyPersonId, FamilyRelation, RepresentativeId } from '../config/wedding'
 
 export type Lang = 'en' | 'hi' | 'bn'
 
@@ -13,7 +13,7 @@ export interface Messages {
   meta: { htmlLang: string; nativeName: string; shortName: string }
   skipToCelebrations: string
   language: string
-  nav: { home: string; events: string; families: string; venue: string; rsvp: string }
+  nav: { home: string; events: string; families: string; venue: string }
   navAria: string
   openMenu: string
   closeMenu: string
@@ -54,11 +54,16 @@ export interface Messages {
     intro: string
     brideFamily: string
     groomFamily: string
-    relations: Record<string, string>
+    relations: Record<FamilyRelation, string>
     address: string
     contactHint: string
     call: (name: string) => string
     whatsapp: (name: string) => string
+    vineetTitle: string
+    darshanabhilashiTitle: string
+    people: Record<FamilyPersonId, string>
+    addresses: { bride: string; groom: string }
+    representatives: Record<RepresentativeId, string>
   }
   venue: {
     eyebrow: string
@@ -67,51 +72,7 @@ export interface Messages {
     weddingVenue: string
     receptionVenue: string
     baraatLocation: string
-    accommodation: string
-    transport: string
-    comingSoon: string
     mapAria: (label: string, name: string) => string
-  }
-  rsvp: {
-    eyebrow: string
-    title: string
-    intro: string
-    demoNote: string
-    demoStrong: string
-    guestName: string
-    required: string
-    namePlaceholder: string
-    phone: string
-    optional: string
-    willAttend: string
-    accepts: string
-    declines: string
-    attendees: string
-    includingYou: string
-    eventsAttending: string
-    selectAtLeastOne: string
-    clearAll: string
-    selectAll: string
-    dietary: string
-    dietaryPlaceholder: string
-    message: string
-    messagePlaceholder: string
-    send: string
-    sending: string
-    thankYou: string
-    successAccept: string
-    successDecline: string
-    demoComplete: string
-    demoBody: string
-    another: string
-    couldNotSend: string
-    fixFollowing: string
-    errName: string
-    errPhone: string
-    errAttendance: string
-    errAttendees: string
-    errEvents: string
-    errGeneric: string
   }
   footer: {
     signoff: string

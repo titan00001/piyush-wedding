@@ -3,7 +3,7 @@ import { Landmark, Mail, Navigation } from 'lucide-react'
 import { eventById, events, venueEmail, venueLandmark } from '../config/wedding'
 import { useLanguage } from '../i18n/useLanguage'
 import { formatDate } from '../lib/dates'
-import { BaraatHorseIcon, LocationPinIcon, MandapIllustration, ReceptionIllustration, StayIcon, TransportIcon } from './illustrations'
+import { BaraatHorseIcon, LocationPinIcon, MandapIllustration, ReceptionIllustration } from './illustrations'
 import { SectionHeading } from './SectionHeading'
 
 interface PlaceProps {
@@ -68,18 +68,6 @@ function Place({ id, icon, label, name, lines, landmark, email, mapUrl, mapLabel
         {mapLabel}
       </a>
     </article>
-  )
-}
-
-function Placeholder({ icon, title, soon }: { icon: ReactNode; title: string; soon: string }) {
-  return (
-    <section aria-label={title} className="flex items-center gap-4 rounded-2xl border-2 border-dashed border-gold/60 bg-paper/60 p-5">
-      <span className="h-14 w-14 shrink-0">{icon}</span>
-      <div>
-        <h3 className="text-2xl font-semibold">{title}</h3>
-        <p className="m-0 text-ink/80">{soon}</p>
-      </div>
-    </section>
   )
 }
 
@@ -151,11 +139,6 @@ export function VenueSection() {
             mapLabel={t.events.byId.mehendi.maps[0]}
             mapAria={t.venue.mapAria(t.events.byId.mehendi.maps[0], aryaSamaj.venue)}
           />
-        </div>
-
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
-          <Placeholder icon={<StayIcon className="h-full w-full" />} title={t.venue.accommodation} soon={t.venue.comingSoon} />
-          <Placeholder icon={<TransportIcon className="h-full w-full" />} title={t.venue.transport} soon={t.venue.comingSoon} />
         </div>
       </div>
     </section>

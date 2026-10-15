@@ -2,7 +2,6 @@ import { FamilySection } from './components/FamilySection'
 import { Footer } from './components/Footer'
 import { HeroSection } from './components/HeroSection'
 import { Navbar } from './components/Navbar'
-import { RSVPForm } from './components/RSVPForm'
 import { VenueSection } from './components/VenueSection'
 import { WeddingEvents } from './components/WeddingEvents'
 import { useLanguage } from './i18n/useLanguage'
@@ -24,7 +23,6 @@ export default function App() {
         <WeddingEvents />
         <FamilySection />
         <VenueSection />
-        <RSVPForm />
       </main>
       <Footer />
     </>

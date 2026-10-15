@@ -7,7 +7,7 @@ export { ReceptionIllustration } from './ReceptionIllustration'
 export { FamilyEmblem } from './FamilyEmblem'
 export { CoupleMonogram } from './CoupleMonogram'
 export type { CoupleMonogramProps } from './CoupleMonogram'
-export { LocationPinIcon, BaraatHorseIcon, TransportIcon, StayIcon } from './VenueIcons'
+export { LocationPinIcon, BaraatHorseIcon } from './VenueIcons'
 export {
   Flower,
   Marigold,

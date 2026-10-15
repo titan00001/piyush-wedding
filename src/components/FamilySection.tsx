@@ -21,6 +21,7 @@ function RepresentativeRow({ person }: { person: Representative }) {
   const [open, setOpen] = useState(false)
   const rootRef = useRef<HTMLLIElement>(null)
   const popupId = useId()
+  const name = t.families.representatives[person.id]
 
   useEffect(() => {
     if (!open) return
@@ -42,7 +43,7 @@ function RepresentativeRow({ person }: { person: Representative }) {
     return (
       <li className="flex items-center justify-center gap-3 font-serif text-2xl font-medium">
         <PaisleyDecoration className="h-6 w-4 text-gold" />
-        {person.name}
+        {name}
         <PaisleyDecoration className="h-6 w-4 -scale-x-100 text-gold" />
       </li>
     )
@@ -72,7 +73,7 @@ function RepresentativeRow({ person }: { person: Representative }) {
         title={t.families.contactHint}
         onClick={() => setOpen((v) => !v)}
       >
-        {person.name}
+        {name}
       </button>
       <PaisleyDecoration className="h-6 w-4 -scale-x-100 text-gold" />
 
@@ -88,7 +89,7 @@ function RepresentativeRow({ person }: { person: Representative }) {
           <a
             href={`tel:${e164(phone)}`}
             className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-gold/70 bg-ivory text-maroon no-underline transition-colors hover:bg-blush"
-            aria-label={t.families.call(person.name)}
+            aria-label={t.families.call(name)}
           >
             <Phone size={18} aria-hidden="true" />
           </a>
@@ -97,7 +98,7 @@ function RepresentativeRow({ person }: { person: Representative }) {
             target="_blank"
             rel="noopener noreferrer"
             className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-gold/70 bg-ivory text-maroon no-underline transition-colors hover:bg-blush"
-            aria-label={t.families.whatsapp(person.name)}
+            aria-label={t.families.whatsapp(name)}
           >
             <MessageCircle size={18} aria-hidden="true" />
           </a>
@@ -113,15 +114,19 @@ function RepresentativeRow({ person }: { person: Representative }) {
 }
 
 function NameList({ id, title, people }: { id: string; title: string; people: readonly Representative[] }) {
+  const { lang } = useLanguage()
+  // Pinyon Script is Latin-only; use the serif for Hindi / Bengali titles.
+  const titleClass = lang === 'en' ? 'font-script text-5xl font-normal' : 'font-serif text-4xl font-semibold sm:text-5xl'
+
   return (
     <section aria-labelledby={id} className="frame px-6 py-8 text-center">
       <LotusDecoration className="mx-auto h-9 w-16 text-gold" />
-      <h3 id={id} className="mt-2 font-script text-5xl font-normal text-maroon">
+      <h3 id={id} className={`mt-2 text-maroon ${titleClass}`}>
         {title}
       </h3>
       <ul className="m-0 mt-5 grid list-none gap-3 p-0">
         {people.map((person) => (
-          <RepresentativeRow key={person.name} person={person} />
+          <RepresentativeRow key={person.id} person={person} />
         ))}
       </ul>
     </section>
@@ -144,8 +149,12 @@ export function FamilySection() {
         </div>
 
         <div className="mt-14 grid gap-6 md:grid-cols-2">
-          <NameList id="rep-vineet" title="Vineet" people={representatives.vineet} />
-          <NameList id="rep-darshanabhilashi" title="Darshanabhilashi" people={representatives.darshanabhilashi} />
+          <NameList id="rep-vineet" title={t.families.vineetTitle} people={representatives.vineet} />
+          <NameList
+            id="rep-darshanabhilashi"
+            title={t.families.darshanabhilashiTitle}
+            people={representatives.darshanabhilashi}
+          />
         </div>
       </div>
     </section>

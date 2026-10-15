@@ -9,7 +9,7 @@
 export type EventId = 'mehendi' | 'haldi' | 'shaadi' | 'reception'
 export type EventTheme = 'sage' | 'blush' | 'turmeric' | 'maroon' | 'burgundy'
 export type IllustrationKey = 'mehendi' | 'haldi' | 'baraat' | 'mandap' | 'reception'
-export type NavId = 'home' | 'events' | 'families' | 'venue' | 'rsvp'
+export type NavId = 'home' | 'events' | 'families' | 'venue'
 
 export interface MapLink {
   url: string
@@ -112,48 +112,70 @@ export const events: WeddingEvent[] = [
   },
 ]
 
+export type FamilyRelation = 'Father' | 'Mother' | 'Grandfather' | 'Grandmother'
+
+export type FamilyPersonId =
+  | 'priya-chaurasia'
+  | 'piyush-arya'
+  | 'garun-kumar-chaurasia'
+  | 'ruby-chaurasia'
+  | 'hari-shankar-prasad-chaurasia'
+  | 'late-raj-kishori-devi'
+  | 'ashok-kumar-arya'
+  | 'surekha-arya'
+  | 'late-raja-ram-arya'
+  | 'kalawati-devi-arya'
+
 export interface FamilyMember {
-  relation: string
-  name: string
+  id: FamilyPersonId
+  relation: FamilyRelation
 }
 
 export interface Family {
   side: 'bride' | 'groom'
-  name: string
+  /** Localized via i18n `families.people`. */
+  personId: FamilyPersonId
   monogram: string
   members: FamilyMember[]
-  address: string
 }
 
 export const families: { bride: Family; groom: Family } = {
   bride: {
     side: 'bride',
-    name: 'Priya Chaurasia',
+    personId: 'priya-chaurasia',
     monogram: 'C',
     members: [
-      { relation: 'Father', name: 'Garun Kumar Chaurasia' },
-      { relation: 'Mother', name: 'Ruby Chaurasia' },
-      { relation: 'Grandfather', name: 'Hari Prasad Chaurasia' },
-      { relation: 'Grandmother', name: 'Late Raj Kishori Devi' },
+      { id: 'garun-kumar-chaurasia', relation: 'Father' },
+      { id: 'ruby-chaurasia', relation: 'Mother' },
+      { id: 'hari-shankar-prasad-chaurasia', relation: 'Grandfather' },
+      { id: 'late-raj-kishori-devi', relation: 'Grandmother' },
     ],
-    address: 'Power House Gate, Zamania, Uttar Pradesh',
   },
   groom: {
     side: 'groom',
-    name: 'Piyush Arya',
+    personId: 'piyush-arya',
     monogram: 'A',
     members: [
-      { relation: 'Father', name: 'Ashok Kumar Arya' },
-      { relation: 'Mother', name: 'Surekha Arya' },
-      { relation: 'Grandfather', name: 'Late Raja Ram Arya' },
-      { relation: 'Grandmother', name: 'Kalawati Devi Arya' },
+      { id: 'ashok-kumar-arya', relation: 'Father' },
+      { id: 'surekha-arya', relation: 'Mother' },
+      { id: 'late-raja-ram-arya', relation: 'Grandfather' },
+      { id: 'kalawati-devi-arya', relation: 'Grandmother' },
     ],
-    address: 'Bechu Chatterjee Street, Kolkata, West Bengal',
   },
 }
 
+export type RepresentativeId =
+  | 'ashok-kumar-arya'
+  | 'santosh-kumar-arya'
+  | 'ayush-arya'
+  | 'cyrush-arya'
+  | 'shailendra-arya'
+  | 'tejas-arya'
+  | 'sunil-chaurasia'
+  | 'madhukar-chaurasia'
+
 export interface Representative {
-  name: string
+  id: RepresentativeId
   /** Indian mobile number digits only (no +91). Undefined when not supplied. */
   phone?: string
 }
@@ -163,20 +185,20 @@ export const representatives: {
   darshanabhilashi: Representative[]
 } = {
   vineet: [
-    { name: 'Ashok Kumar Arya', phone: '9339223868' },
-    { name: 'Santosh Kumar Arya', phone: '7003519001' },
+    { id: 'ashok-kumar-arya', phone: '9339223868' },
+    { id: 'santosh-kumar-arya', phone: '7003519001' },
   ],
   darshanabhilashi: [
-    { name: 'Ayush Arya', phone: '9123719175' },
-    { name: 'Cyrush Arya', phone: '9123617202' },
-    { name: 'Shailendra Arya' },
-    { name: 'Tejas Arya' },
-    { name: 'Sunil Chaurasia' },
-    { name: 'Madhukar Chaurasia' },
+    { id: 'ayush-arya', phone: '9123719175' },
+    { id: 'cyrush-arya', phone: '9123617202' },
+    { id: 'shailendra-arya' },
+    { id: 'tejas-arya' },
+    { id: 'sunil-chaurasia' },
+    { id: 'madhukar-chaurasia' },
   ],
 }
 
-export const navIds: NavId[] = ['home', 'events', 'families', 'venue', 'rsvp']
+export const navIds: NavId[] = ['home', 'events', 'families', 'venue']
 
 export const eventById = (id: EventId): WeddingEvent => {
   const found = events.find((e) => e.id === id)
@@ -184,6 +206,6 @@ export const eventById = (id: EventId): WeddingEvent => {
   return found
 }
 
-/** Venues shown in the Venue & Travel section, derived from the events above. */
+/** Venues shown in the Venue section, derived from the events above. */
 export const venueEmail = BANQUET_EMAIL
 export const venueLandmark = LANDMARK
