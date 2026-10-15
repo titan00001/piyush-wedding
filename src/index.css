@@ -1,0 +1,291 @@
+@import '@fontsource/cormorant-garamond/400.css';
+@import '@fontsource/cormorant-garamond/400-italic.css';
+@import '@fontsource/cormorant-garamond/500.css';
+@import '@fontsource/cormorant-garamond/600.css';
+@import '@fontsource/cormorant-garamond/700.css';
+@import '@fontsource/hind/400.css';
+@import '@fontsource/hind/500.css';
+@import '@fontsource/hind/600.css';
+@import '@fontsource/noto-sans-bengali/400.css';
+@import '@fontsource/noto-sans-bengali/500.css';
+@import '@fontsource/noto-sans-bengali/600.css';
+@import '@fontsource/pinyon-script/400.css';
+@import 'tailwindcss';
+
+@theme static {
+  --color-ivory: #fbf5e8;
+  --color-cream: #f4ead3;
+  --color-parchment: #eadcbc;
+  --color-paper: #fffdf6;
+  --color-maroon: #6e1423;
+  --color-maroon-deep: #4b0d18;
+  --color-burgundy: #8d2036;
+  --color-gold: #b8903b;
+  --color-gold-light: #e2c57c;
+  --color-gold-dark: #7a5b14;
+  --color-blush: #f3d6d2;
+  --color-blush-deep: #e0a0a4;
+  --color-rose: #d4587a;
+  --color-sage: #8c9c7c;
+  --color-sage-light: #dde5d0;
+  --color-sage-deep: #4f6144;
+  --color-ink: #3b1d22;
+  --color-turmeric: #e0a526;
+  --color-turmeric-light: #f6e3a8;
+  --color-marigold: #e58a2b;
+  --color-skin: #d8a07a;
+  --color-skin-deep: #be845c;
+
+  --font-serif: 'Cormorant Garamond', 'Noto Sans Bengali', 'Times New Roman', serif;
+  --font-sans: 'Hind', 'Noto Sans Bengali', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-script: 'Pinyon Script', 'Snell Roundhand', cursive;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 4.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-ivory);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    color: var(--color-maroon);
+    line-height: 1.12;
+    margin: 0;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-maroon);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .on-dark :focus-visible {
+    outline-color: var(--color-gold-light);
+  }
+
+  ::selection {
+    background: var(--color-gold-light);
+    color: var(--color-maroon-deep);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer components {
+  /* Faint hand-block pattern: tiled lotus lattice, drawn locally as a data URI. */
+  .pattern-lattice {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23b8903b' stroke-opacity='.22' stroke-width='1'%3E%3Cpath d='M36 6c8 10 8 20 0 30-8-10-8-20 0-30zM36 66c8-10 8-20 0-30-8 10-8 20 0 30zM6 36c10-8 20-8 30 0-10 8-20 8-30 0zM66 36c-10-8-20-8-30 0 10 8 20 8 30 0z'/%3E%3C/g%3E%3Ccircle cx='36' cy='36' r='2' fill='%23b8903b' fill-opacity='.3'/%3E%3C/svg%3E");
+    background-size: 72px 72px;
+  }
+
+  .pattern-lattice-light {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23e2c57c' stroke-opacity='.16' stroke-width='1'%3E%3Cpath d='M36 6c8 10 8 20 0 30-8-10-8-20 0-30zM36 66c8-10 8-20 0-30-8 10-8 20 0 30zM6 36c10-8 20-8 30 0-10 8-20 8-30 0zM66 36c-10-8-20-8-30 0 10 8 20 8 30 0z'/%3E%3C/g%3E%3Ccircle cx='36' cy='36' r='2' fill='%23e2c57c' fill-opacity='.22'/%3E%3C/svg%3E");
+    background-size: 72px 72px;
+  }
+
+  /* Double-ruled invitation frame: outer hairline + inset hairline. */
+  .frame {
+    position: relative;
+    background: var(--color-paper);
+    border: 1px solid color-mix(in srgb, var(--color-gold) 55%, transparent);
+    border-radius: 1.25rem;
+    box-shadow: 0 18px 40px -24px rgb(110 20 35 / 0.45);
+  }
+
+  .frame::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid color-mix(in srgb, var(--color-gold) 35%, transparent);
+    border-radius: 0.9rem;
+    pointer-events: none;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.55rem 1.4rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--color-maroon);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      border-color 0.2s,
+      transform 0.2s;
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn-primary {
+    background: var(--color-maroon);
+    color: var(--color-ivory);
+    box-shadow: inset 0 0 0 2px var(--color-maroon), inset 0 0 0 3px var(--color-gold-light);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-maroon-deep);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--color-maroon);
+  }
+
+  .btn-outline:hover {
+    background: var(--color-maroon);
+    color: var(--color-ivory);
+  }
+
+  .btn-gold {
+    background: var(--color-gold-light);
+    border-color: var(--color-gold-light);
+    color: var(--color-maroon-deep);
+  }
+
+  .btn-gold:hover {
+    background: var(--color-ivory);
+    border-color: var(--color-ivory);
+  }
+
+  .btn[disabled],
+  .btn[aria-disabled='true'] {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
+  .field {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.6rem 0.9rem;
+    background: var(--color-ivory);
+    border: 1.5px solid color-mix(in srgb, var(--color-gold) 70%, transparent);
+    border-radius: 0.7rem;
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 1rem;
+  }
+
+  .field::placeholder {
+    color: color-mix(in srgb, var(--color-ink) 55%, transparent);
+  }
+
+  .field:focus {
+    outline: 3px solid color-mix(in srgb, var(--color-maroon) 35%, transparent);
+    outline-offset: 1px;
+    border-color: var(--color-maroon);
+  }
+
+  .field[aria-invalid='true'] {
+    border-color: #a31515;
+    background: #fff6f4;
+  }
+}
+
+/* One quiet, ambient motion: a slow turn of the mandala behind the couple. */
+@media (prefers-reduced-motion: no-preference) {
+  .spin-slow {
+    animation: spin-slow 120s linear infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+
+  .flicker {
+    animation: flicker 2.6s ease-in-out infinite;
+    transform-origin: 50% 100%;
+    transform-box: fill-box;
+  }
+
+  .sway {
+    animation: sway 7s ease-in-out infinite;
+    transform-origin: 50% 0%;
+    transform-box: fill-box;
+  }
+
+  .hero-in {
+    animation: hero-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+  45% {
+    transform: scale(0.94, 1.08);
+    opacity: 0.9;
+  }
+  70% {
+    transform: scale(1.03, 0.95);
+    opacity: 1;
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-1.2deg);
+  }
+  50% {
+    transform: rotate(1.2deg);
+  }
+}
+
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.sr-only-focusable:not(:focus):not(:focus-within) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
