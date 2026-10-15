@@ -1,17 +1,18 @@
-# Cloudflare Pages — static Vite build served from dist/
-# Docs: https://developers.cloudflare.com/pages/
+# Cloudflare Workers static assets (Vite build → dist/)
+# Docs: https://developers.cloudflare.com/workers/static-assets/
 #
-# First-time / dashboard deploy:
-#   - Framework preset: Vite
+# Dashboard / Workers Builds:
 #   - Build command: yarn build
-#   - Build output directory: dist
-#   - Root directory: /  (this repo is the app)
-#   - Environment variable (Production, and rebuild): VITE_SITE_URL=https://<your-domain>
+#   - Deploy uses: wrangler deploy (reads [assets] below)
+#   - Environment variable (Production, then rebuild): VITE_SITE_URL=https://<your-domain>
 #   - Optional: NODE_VERSION=24
 #
-# CLI deploy (after yarn build):
+# CLI:
 #   yarn deploy
 
 name = "piyush-priya-wedding"
 compatibility_date = "2025-10-15"
-pages_build_output_dir = "dist"
+
+[assets]
+directory = "./dist"
+not_found_handling = "single-page-application"

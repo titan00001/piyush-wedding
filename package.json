@@ -8,8 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "deploy": "yarn build && wrangler pages deploy dist --project-name=piyush-priya-wedding",
-    "deploy:preview": "yarn build && wrangler pages deploy dist --project-name=piyush-priya-wedding --branch=preview"
+    "deploy": "yarn build && wrangler deploy",
+    "deploy:preview": "yarn build && wrangler versions upload"
   },
   "engines": {
     "node": ">=24",
