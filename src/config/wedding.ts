@@ -152,10 +152,29 @@ export const families: { bride: Family; groom: Family } = {
   },
 }
 
-export const representatives = {
-  vineet: ['Ashok Arya', 'Santosh Arya', 'Ayush Arya', 'Cyrush Arya'],
-  darshanabhilashi: ['Santosh Arya', 'Ayush Arya', 'Cyrush Arya'],
-} as const
+export interface Representative {
+  name: string
+  /** Indian mobile number digits only (no +91). Undefined when not supplied. */
+  phone?: string
+}
+
+export const representatives: {
+  vineet: Representative[]
+  darshanabhilashi: Representative[]
+} = {
+  vineet: [
+    { name: 'Ashok Kumar Arya', phone: '9339223868' },
+    { name: 'Santosh Kumar Arya', phone: '7003519001' },
+  ],
+  darshanabhilashi: [
+    { name: 'Ayush Arya', phone: '9123719175' },
+    { name: 'Cyrush Arya', phone: '9123617202' },
+    { name: 'Shailendra Arya' },
+    { name: 'Tejas Arya' },
+    { name: 'Sunil Chaurasia' },
+    { name: 'Madhukar Chaurasia' },
+  ],
+}
 
 export const navIds: NavId[] = ['home', 'events', 'families', 'venue', 'rsvp']
 

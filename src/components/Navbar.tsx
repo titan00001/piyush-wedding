@@ -3,6 +3,7 @@ import { Menu, X } from 'lucide-react'
 import { navIds } from '../config/wedding'
 import type { NavId } from '../config/wedding'
 import { useLanguage } from '../i18n/useLanguage'
+import { CoupleMonogram } from './illustrations'
 import { LanguageSwitcher } from './LanguageSwitcher'
 
 export function Navbar() {
@@ -46,9 +47,13 @@ export function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-gold/40 bg-ivory/90 backdrop-blur-md">
       <nav aria-label={t.navAria} className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-2 px-4 sm:h-16 sm:px-6">
         <a href="#home" className="flex min-w-0 items-center gap-2 font-serif text-xl font-semibold text-maroon no-underline" onClick={() => setOpen(false)}>
-          <span aria-hidden="true" className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-gold bg-maroon text-sm text-gold-light">
-            P&amp;P
-          </span>
+          <CoupleMonogram
+            aria-hidden="true"
+            className="h-9 w-9 shrink-0 rounded-full border border-gold/70 shadow-sm"
+            background="var(--color-paper)"
+            primary="var(--color-maroon)"
+            secondary="var(--color-blush-deep)"
+          />
           <span className="truncate font-script text-2xl font-normal">Piyush &amp; Priya</span>
         </a>
 

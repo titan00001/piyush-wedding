@@ -70,6 +70,9 @@ export const hi: Messages = {
       Grandmother: 'दादी',
     },
     address: 'पता: ',
+    contactHint: 'संपर्क के लिए होवर या टैप करें',
+    call: (name) => `${name} को कॉल करें`,
+    whatsapp: (name) => `${name} को व्हाट्सऐप करें`,
   },
   venue: {
     eyebrow: 'रास्ता खोजें',

@@ -70,6 +70,9 @@ export const en: Messages = {
       Grandmother: 'Grandmother',
     },
     address: 'Address: ',
+    contactHint: 'Hover or tap for contact',
+    call: (name) => `Call ${name}`,
+    whatsapp: (name) => `WhatsApp ${name}`,
   },
   venue: {
     eyebrow: 'Finding your way',

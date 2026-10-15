@@ -70,6 +70,9 @@ export const bn: Messages = {
       Grandmother: 'পিতামহী',
     },
     address: 'ঠিকানা: ',
+    contactHint: 'যোগাযোগের জন্য হোভার বা ট্যাপ করুন',
+    call: (name) => `${name}-কে কল করুন`,
+    whatsapp: (name) => `${name}-কে হোয়াটসঅ্যাপ করুন`,
   },
   venue: {
     eyebrow: 'পথ খুঁজুন',

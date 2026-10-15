@@ -5,6 +5,8 @@ export { BaraatIllustration } from './BaraatIllustration'
 export { MandapIllustration } from './MandapIllustration'
 export { ReceptionIllustration } from './ReceptionIllustration'
 export { FamilyEmblem } from './FamilyEmblem'
+export { CoupleMonogram } from './CoupleMonogram'
+export type { CoupleMonogramProps } from './CoupleMonogram'
 export { LocationPinIcon, BaraatHorseIcon, TransportIcon, StayIcon } from './VenueIcons'
 export {
   Flower,

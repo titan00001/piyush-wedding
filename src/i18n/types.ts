@@ -56,6 +56,9 @@ export interface Messages {
     groomFamily: string
     relations: Record<string, string>
     address: string
+    contactHint: string
+    call: (name: string) => string
+    whatsapp: (name: string) => string
   }
   venue: {
     eyebrow: string
