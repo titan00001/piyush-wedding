@@ -13,6 +13,7 @@ export const en: Messages = {
   navAria: 'Main',
   openMenu: 'Open menu',
   closeMenu: 'Close menu',
+  names: { groomFirst: 'Piyush', brideFirst: 'Priya', and: '&' },
   hero: {
     omLabel: 'Om, the auspicious invocation',
     celebrationsOf: 'The wedding celebrations of',
@@ -120,6 +121,21 @@ export const en: Messages = {
     receptionVenue: 'Preeti Bhoj venue',
     baraatLocation: 'Baraat starting location',
     mapAria: (label, name) => `${label}: ${name}, open in Google Maps (opens in a new tab)`,
+  },
+  places: {
+    venues: {
+      aryaSamaj: 'Arya Samaj Bhawan',
+      royalBanquet: 'Royal Banquet',
+      rajbariBanquet: 'Rajbari Banquet',
+    },
+    addresses: {
+      bidhanSarani: '19, Bidhan Sarani, Kolkata – 700006',
+      kalaberia: 'Reekjoyoni, Kalaberia, Kolkata – 700135 (Rajarhat)',
+      bechuChatterjee: '85, Bechu Chatterjee Street, Kolkata – 700009',
+    },
+    landmarks: {
+      asterGarden: 'Near Aster Garden Complex',
+    },
   },
   footer: {
     signoff: 'With love, the Arya & Chaurasia families.',

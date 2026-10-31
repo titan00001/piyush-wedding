@@ -7,7 +7,7 @@ import { CoupleMonogram } from './illustrations'
 import { LanguageSwitcher } from './LanguageSwitcher'
 
 export function Navbar() {
-  const { t } = useLanguage()
+  const { lang, t } = useLanguage()
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState<string>('home')
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -46,7 +46,7 @@ export function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-gold/40 bg-ivory/90 backdrop-blur-md">
       <nav aria-label={t.navAria} className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-2 px-4 sm:h-16 sm:px-6">
-        <a href="#home" aria-label="Piyush & Priya" className="flex min-w-0 items-center gap-2 font-serif text-xl font-semibold text-maroon no-underline" onClick={() => setOpen(false)}>
+        <a href="#home" aria-label={`${t.names.groomFirst} ${t.names.and} ${t.names.brideFirst}`} className="flex min-w-0 items-center gap-2 font-serif text-xl font-semibold text-maroon no-underline" onClick={() => setOpen(false)}>
           <CoupleMonogram
             aria-hidden="true"
             className="h-9 w-9 shrink-0 rounded-full border border-gold/70 shadow-sm"
@@ -54,7 +54,9 @@ export function Navbar() {
             primary="var(--color-maroon)"
             secondary="var(--color-blush-deep)"
           />
-          <span className="hidden whitespace-nowrap font-script text-2xl font-normal lg:inline">Piyush &amp; Priya</span>
+          <span className={`hidden whitespace-nowrap lg:inline ${lang === 'en' ? 'font-script text-2xl font-normal' : 'font-serif text-xl font-semibold'}`}>
+            {t.names.groomFirst} {t.names.and} {t.names.brideFirst}
+          </span>
         </a>
 
         <ul className="hidden items-center gap-1 lg:flex">

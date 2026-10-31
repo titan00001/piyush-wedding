@@ -17,6 +17,7 @@ export interface Messages {
   navAria: string
   openMenu: string
   closeMenu: string
+  names: { groomFirst: string; brideFirst: string; and: string }
   hero: {
     omLabel: string
     celebrationsOf: string
@@ -89,6 +90,11 @@ export interface Messages {
     receptionVenue: string
     baraatLocation: string
     mapAria: (label: string, name: string) => string
+  }
+  places: {
+    venues: { aryaSamaj: string; royalBanquet: string; rajbariBanquet: string }
+    addresses: { bidhanSarani: string; kalaberia: string; bechuChatterjee: string }
+    landmarks: { asterGarden: string }
   }
   footer: {
     signoff: string

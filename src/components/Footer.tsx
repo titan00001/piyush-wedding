@@ -1,25 +1,29 @@
 import { ArrowUp } from 'lucide-react'
-import { couple, navIds } from '../config/wedding'
+import { navIds } from '../config/wedding'
 import type { NavId } from '../config/wedding'
 import { useLanguage } from '../i18n/useLanguage'
 import { FloralCorner, FloralDivider, LotusDecoration } from './illustrations'
 import { ShareButton } from './ShareButton'
 
 export function Footer() {
-  const { t } = useLanguage()
+  const { lang, t } = useLanguage()
+  const namesClass =
+    lang === 'en'
+      ? 'mt-3 px-2 font-script text-4xl leading-tight text-gold-light sm:text-6xl'
+      : 'mt-3 px-2 font-serif text-4xl font-semibold leading-tight text-gold-light sm:text-5xl'
 
   return (
     <footer className="on-dark pattern-lattice-light relative isolate overflow-hidden bg-maroon-deep px-5 pb-10 pt-16 text-center text-cream">
       <FloralCorner className="pointer-events-none absolute -left-3 -top-3 -z-10 h-32 w-32 opacity-70 sm:h-44 sm:w-44" />
       <FloralCorner className="pointer-events-none absolute -right-3 -top-3 -z-10 h-32 w-32 -scale-x-100 opacity-70 sm:h-44 sm:w-44" />
 
-      <LotusDecoration className="mx-auto h-20 w-24 text-gold-light" />
+      <LotusDecoration className="mx-auto h-28 w-44" />
       <p className="mt-4 font-serif text-xl italic">{t.footer.signoff}</p>
-      <p className="mt-3 px-2 font-script text-4xl leading-tight text-gold-light sm:text-6xl">
-        {couple.groomFirst} &amp; {couple.brideFirst}
+      <p className={namesClass}>
+        {t.names.groomFirst} {t.names.and} {t.names.brideFirst}
       </p>
       <p className="mt-1 font-serif text-2xl font-medium text-ivory">{t.hero.datesDisplay}</p>
-      <FloralDivider className="mx-auto mt-4 h-8 w-64 text-gold-light" />
+      <FloralDivider className="mx-auto mt-4 h-12 w-72 text-gold-light" />
       <p className="mt-3 font-serif text-xl italic text-gold-light">{t.footer.awaiting}</p>
 
       <nav aria-label={t.footer.aria} className="mt-4">

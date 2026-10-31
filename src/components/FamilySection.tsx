@@ -121,7 +121,7 @@ function NameList({ id, title, people }: { id: string; title: string; people: re
 
   return (
     <section aria-labelledby={id} className="frame px-6 py-8 text-center">
-      <LotusDecoration className="mx-auto h-14 w-16 text-gold" />
+      <LotusDecoration className="mx-auto h-16 w-24" />
       <h3 id={id} className={`mt-2 text-maroon ${titleClass}`}>
         {title}
       </h3>

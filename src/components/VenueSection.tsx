@@ -3,6 +3,7 @@ import { Landmark, Navigation } from 'lucide-react'
 import { eventById, events, venueLandmark } from '../config/wedding'
 import { useLanguage } from '../i18n/useLanguage'
 import { formatClock, formatDate } from '../lib/dates'
+import { localizeAddress, localizeLandmarkName, localizeVenue } from '../lib/places'
 import { BaraatHorseIcon, LocationPinIcon } from './illustrations'
 import { Reveal } from './Reveal'
 import { SectionHeading } from './SectionHeading'
@@ -91,13 +92,13 @@ export function VenueSection() {
               id="place-wedding"
               icon={<LocationPinIcon className="h-full w-full" />}
               label={t.venue.weddingVenue}
-              name={shaadi.venue}
-              lines={shaadi.addressLines}
+              name={localizeVenue(shaadi.venue, t)}
+              lines={shaadi.addressLines.map((line) => localizeAddress(line, t))}
               landmark={venueLandmark}
-              landmarkText={t.events.landmark(venueLandmark)}
+              landmarkText={t.events.landmark(localizeLandmarkName(venueLandmark, t))}
               mapUrl={shaadi.maps[1].url}
               mapLabel={shaadiCopy.maps[1]}
-              mapAria={t.venue.mapAria(shaadiCopy.maps[1], shaadi.venue)}
+              mapAria={t.venue.mapAria(shaadiCopy.maps[1], localizeVenue(shaadi.venue, t))}
               note={`${shaadiCopy.name} · ${formatDate(shaadi.dateISO, t)}`}
             />
           </Reveal>
@@ -106,13 +107,13 @@ export function VenueSection() {
               id="place-reception"
               icon={<LocationPinIcon className="h-full w-full" />}
               label={t.venue.receptionVenue}
-              name={reception.venue}
-              lines={reception.addressLines}
+              name={localizeVenue(reception.venue, t)}
+              lines={reception.addressLines.map((line) => localizeAddress(line, t))}
               landmark={reception.landmark}
-              landmarkText={reception.landmark ? t.events.landmark(reception.landmark) : undefined}
+              landmarkText={reception.landmark ? t.events.landmark(localizeLandmarkName(reception.landmark, t)) : undefined}
               mapUrl={reception.maps[0].url}
               mapLabel={receptionCopy.maps[0]}
-              mapAria={t.venue.mapAria(receptionCopy.maps[0], reception.venue)}
+              mapAria={t.venue.mapAria(receptionCopy.maps[0], localizeVenue(reception.venue, t))}
               note={`${receptionCopy.name} · ${formatDate(reception.dateISO, t)}${reception.time ? ` · ${formatClock(reception.time, t)}` : ''}`}
             />
           </Reveal>
@@ -121,11 +122,11 @@ export function VenueSection() {
               id="place-baraat"
               icon={<BaraatHorseIcon className="h-full w-full" />}
               label={t.venue.baraatLocation}
-              name={baraat.address}
+              name={localizeAddress(baraat.address, t)}
               lines={[]}
               mapUrl={shaadi.maps[0].url}
               mapLabel={shaadiCopy.maps[0]}
-              mapAria={t.venue.mapAria(shaadiCopy.maps[0], baraat.address)}
+              mapAria={t.venue.mapAria(shaadiCopy.maps[0], localizeAddress(baraat.address, t))}
               note={`${shaadiCopy.name} · ${formatDate(shaadi.dateISO, t)}${baraat.time ? ` · ${formatClock(baraat.time, t)}` : ''}`}
             />
           </Reveal>
@@ -134,11 +135,11 @@ export function VenueSection() {
               id="place-aryasamaj"
               icon={<LocationPinIcon className="h-full w-full" />}
               label={preNames.join(', ')}
-              name={aryaSamaj.venue}
-              lines={aryaSamaj.addressLines}
+              name={localizeVenue(aryaSamaj.venue, t)}
+              lines={aryaSamaj.addressLines.map((line) => localizeAddress(line, t))}
               mapUrl={aryaSamaj.maps[0].url}
               mapLabel={t.events.byId.mehendi.maps[0]}
-              mapAria={t.venue.mapAria(t.events.byId.mehendi.maps[0], aryaSamaj.venue)}
+              mapAria={t.venue.mapAria(t.events.byId.mehendi.maps[0], localizeVenue(aryaSamaj.venue, t))}
               note={preNote}
             />
           </Reveal>

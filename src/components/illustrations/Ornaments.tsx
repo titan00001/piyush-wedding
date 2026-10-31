@@ -1,4 +1,4 @@
-import type { SVGProps } from 'react'
+import { useId, type SVGProps } from 'react'
 import { c } from './palette'
 
 type SvgProps = SVGProps<SVGSVGElement>
@@ -154,106 +154,129 @@ export function Shehnai({ x, y, scale = 1 }: { x: number; y: number; scale?: num
 /* Stand-alone ornaments                                               */
 /* ------------------------------------------------------------------ */
 
-/** Full ovate lotus petal standing on (0,0), softly pointed tip at (0, −h). */
-function lotusPetalD(h: number, w: number) {
-  const n = (v: number) => Number(v.toFixed(2))
-  return [
-    `M0 0`,
-    `C${n(-w * 0.62)} ${n(-h * 0.16)} ${n(-w)} ${n(-h * 0.46)} ${n(-w * 0.38)} ${n(-h * 0.82)}`,
-    `Q0 ${n(-h)} ${n(w * 0.38)} ${n(-h * 0.82)}`,
-    `C${n(w)} ${n(-h * 0.46)} ${n(w * 0.62)} ${n(-h * 0.16)} 0 0Z`,
-  ].join(' ')
+function useLotusIds() {
+  return useId().replace(/:/g, '')
 }
 
-interface LotusPetalSpec {
-  rotate: number
-  h: number
-  w: number
-  opacity: number
-  vein?: boolean
-}
+/** Golden padma: painted petals, stamens, optional water and lily pads. */
+function GoldenLotusArtwork({ uid, water = true }: { uid: string; water?: boolean }) {
+  const gBack = `${uid}-gBack`
+  const gMid = `${uid}-gMid`
+  const gFront = `${uid}-gFront`
+  const gPad = `${uid}-gPad`
+  const glow = `${uid}-glow`
+  const petalBack = `${uid}-petalBack`
+  const petalMid = `${uid}-petalMid`
+  const petalFront = `${uid}-petalFront`
+  const petalD = 'M0 0 C-27 -10 -31 -52 0 -88 C31 -52 27 -10 0 0Z'
+  const veinD = 'M0 -8 Q-2 -44 0 -78'
 
-function LotusPetal({ rotate, h, w, opacity, vein }: LotusPetalSpec) {
   return (
-    <g transform={`rotate(${rotate})`}>
-      <path d={lotusPetalD(h, w)} fill="currentColor" fillOpacity={opacity} />
-      {vein ? (
-        <path
-          d={`M0 ${(-h * 0.1).toFixed(2)} C${(-w * 0.1).toFixed(2)} ${(-h * 0.42).toFixed(2)} 0 ${(-h * 0.7).toFixed(2)} 0 ${(-h * 0.88).toFixed(2)}`}
-          fill="none"
-          strokeWidth="0.55"
-          opacity="0.42"
-        />
+    <>
+      <defs>
+        <linearGradient id={gBack} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#b0680f" />
+          <stop offset="0.55" stopColor="#e6b04c" />
+          <stop offset="1" stopColor="#fbebbd" />
+        </linearGradient>
+        <linearGradient id={gMid} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#c58220" />
+          <stop offset="0.6" stopColor="#f0c768" />
+          <stop offset="1" stopColor="#fff4d6" />
+        </linearGradient>
+        <linearGradient id={gFront} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#d99b33" />
+          <stop offset="0.6" stopColor="#f8de92" />
+          <stop offset="1" stopColor="#fffbee" />
+        </linearGradient>
+        <linearGradient id={gPad} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#5fa890" />
+          <stop offset="1" stopColor="#2c6f5c" />
+        </linearGradient>
+        <radialGradient id={glow} cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stopColor="#fbe29a" stopOpacity="0.65" />
+          <stop offset="1" stopColor="#fbe29a" stopOpacity="0" />
+        </radialGradient>
+        <g id={petalBack}>
+          <path d={petalD} fill={`url(#${gBack})`} stroke="#9c5a0a" strokeWidth="0.8" strokeLinejoin="round" />
+          <path d={veinD} fill="none" stroke="#fff" strokeOpacity="0.45" strokeWidth="0.8" strokeLinecap="round" />
+        </g>
+        <g id={petalMid}>
+          <path d={petalD} fill={`url(#${gMid})`} stroke="#ad6c12" strokeWidth="0.8" strokeLinejoin="round" />
+          <path d={veinD} fill="none" stroke="#fff" strokeOpacity="0.5" strokeWidth="0.8" strokeLinecap="round" />
+        </g>
+        <g id={petalFront}>
+          <path d={petalD} fill={`url(#${gFront})`} stroke="#c0842a" strokeWidth="0.8" strokeLinejoin="round" />
+          <path d={veinD} fill="none" stroke="#fff" strokeOpacity="0.6" strokeWidth="0.8" strokeLinecap="round" />
+        </g>
+      </defs>
+
+      {water ? <circle cx="120" cy="105" r="92" fill={`url(#${glow})`} /> : null}
+
+      {water ? (
+        <g fill="none" stroke="#d9a441" strokeLinecap="round">
+          <ellipse cx="120" cy="164" rx="104" ry="11" strokeOpacity="0.28" strokeWidth="1" />
+          <ellipse cx="120" cy="164" rx="76" ry="8" strokeOpacity="0.42" strokeWidth="1.1" />
+          <ellipse cx="120" cy="164" rx="48" ry="5" strokeOpacity="0.6" strokeWidth="1.2" />
+        </g>
       ) : null}
-    </g>
-  )
-}
 
-function LotusSeedPod({ cx, cy, rx, ry }: { cx: number; cy: number; rx: number; ry: number }) {
-  const seeds: Array<[number, number]> = [
-    [0, -ry * 0.42],
-    [-rx * 0.42, -ry * 0.18],
-    [rx * 0.42, -ry * 0.18],
-    [-rx * 0.22, ry * 0.08],
-    [rx * 0.22, ry * 0.08],
-    [-rx * 0.5, ry * 0.28],
-    [0, ry * 0.22],
-    [rx * 0.5, ry * 0.28],
-    [-rx * 0.22, ry * 0.52],
-    [rx * 0.22, ry * 0.52],
-  ]
-  return (
-    <g>
-      <ellipse cx={cx} cy={cy} rx={rx} ry={ry} fill="currentColor" fillOpacity="0.45" strokeWidth="1" />
-      <ellipse cx={cx} cy={cy - ry * 0.12} rx={rx * 0.72} ry={ry * 0.62} fill="none" strokeWidth="0.55" opacity="0.65" />
-      {seeds.map(([dx, dy]) => (
-        <circle key={`${dx}-${dy}`} cx={cx + dx} cy={cy + dy} r={Math.max(0.55, rx * 0.08)} fill="currentColor" stroke="none" />
-      ))}
-    </g>
-  )
-}
+      {water ? (
+        <g>
+          <ellipse cx="38" cy="172" rx="30" ry="8" fill={`url(#${gPad})`} />
+          <path d="M38 172 L62 168" stroke="#1f5546" strokeOpacity="0.5" strokeWidth="0.8" />
+          <ellipse cx="206" cy="176" rx="26" ry="7" fill={`url(#${gPad})`} />
+          <path d="M206 176 L184 173" stroke="#1f5546" strokeOpacity="0.5" strokeWidth="0.8" />
+        </g>
+      ) : null}
 
-/** Padma in bloom. Fill follows `color` (currentColor by default). */
-export function LotusDecoration({ className, ...rest }: SvgProps) {
-  const ox = 50
-  const oy = 70
-  const outer: LotusPetalSpec[] = [
-    { rotate: -56, h: 36, w: 16.5, opacity: 0.14 },
-    { rotate: -30, h: 48, w: 17, opacity: 0.18, vein: true },
-    { rotate: 30, h: 48, w: 17, opacity: 0.18, vein: true },
-    { rotate: 56, h: 36, w: 16.5, opacity: 0.14 },
-  ]
-  const mid: LotusPetalSpec[] = [
-    { rotate: -42, h: 34, w: 15, opacity: 0.24 },
-    { rotate: 42, h: 34, w: 15, opacity: 0.24 },
-  ]
-  const inner: LotusPetalSpec[] = [
-    { rotate: -14, h: 40, w: 14.5, opacity: 0.34, vein: true },
-    { rotate: 0, h: 54, w: 17.5, opacity: 0.44, vein: true },
-    { rotate: 14, h: 40, w: 14.5, opacity: 0.34, vein: true },
-  ]
+      <g transform="translate(120 158)">
+        <use href={`#${petalBack}`} transform="rotate(-86) scale(0.95)" />
+        <use href={`#${petalBack}`} transform="rotate(86) scale(0.95)" />
+        <use href={`#${petalBack}`} transform="rotate(-64)" />
+        <use href={`#${petalBack}`} transform="rotate(64)" />
+        <use href={`#${petalMid}`} transform="rotate(-44) scale(1.02)" />
+        <use href={`#${petalMid}`} transform="rotate(44) scale(1.02)" />
+        <use href={`#${petalMid}`} transform="rotate(-24) scale(1.02)" />
+        <use href={`#${petalMid}`} transform="rotate(24) scale(1.02)" />
+        <use href={`#${petalFront}`} transform="scale(0.9)" />
 
-  return (
-    <svg viewBox="0 0 100 80" className={className} fill="none" {...deco} {...rest}>
-      <g stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" strokeLinecap="round">
-        <path d="M50 70 C40 68 30 60 26 50 C32 58 42 66 50 70Z" fill="currentColor" fillOpacity="0.12" />
-        <path d="M50 70 C60 68 70 60 74 50 C68 58 58 66 50 70Z" fill="currentColor" fillOpacity="0.12" />
-        <path d="M34 68 C42 74.5 58 74.5 66 68 C58 71.5 42 71.5 34 68Z" fill="currentColor" fillOpacity="0.18" />
-
-        <g transform={`translate(${ox} ${oy})`}>
-          {outer.map((p) => (
-            <LotusPetal key={`o${p.rotate}`} {...p} />
-          ))}
-          {mid.map((p) => (
-            <LotusPetal key={`m${p.rotate}`} {...p} />
-          ))}
-          {inner.map((p) => (
-            <LotusPetal key={`i${p.rotate}`} {...p} />
-          ))}
+        <g transform="translate(0 -44)">
+          <g stroke="#9a3d12" strokeWidth="1.2" strokeLinecap="round">
+            <path d="M0 0 L-17 -11" />
+            <path d="M0 0 L-13 -17" />
+            <path d="M0 0 L-7 -21" />
+            <path d="M0 0 L0 -23" />
+            <path d="M0 0 L7 -21" />
+            <path d="M0 0 L13 -17" />
+            <path d="M0 0 L17 -11" />
+          </g>
+          <g fill="#ffeeb8">
+            <circle cx="-17" cy="-11" r="1.9" />
+            <circle cx="-13" cy="-17" r="1.9" />
+            <circle cx="-7" cy="-21" r="1.9" />
+            <circle cx="0" cy="-23" r="1.9" />
+            <circle cx="7" cy="-21" r="1.9" />
+            <circle cx="13" cy="-17" r="1.9" />
+            <circle cx="17" cy="-11" r="1.9" />
+          </g>
+          <ellipse cx="0" cy="-2" rx="9" ry="5.5" fill="#8a3a14" stroke="#5e2409" strokeWidth="0.8" />
+          <ellipse cx="0" cy="-3.5" rx="5.5" ry="2.6" fill="#c9692b" />
         </g>
 
-        <LotusSeedPod cx={ox} cy={oy - 16} rx={11.5} ry={6.4} />
+        <use href={`#${petalFront}`} transform="rotate(-34) scale(0.74)" />
+        <use href={`#${petalFront}`} transform="rotate(34) scale(0.74)" />
       </g>
+    </>
+  )
+}
+
+/** Golden lotus floating on water. */
+export function LotusDecoration({ className, ...rest }: SvgProps) {
+  const uid = useLotusIds()
+  return (
+    <svg viewBox="0 48 240 148" className={className} fill="none" overflow="visible" {...deco} {...rest}>
+      <GoldenLotusArtwork uid={uid} />
     </svg>
   )
 }
@@ -329,34 +352,19 @@ export function FloralCorner({ className, ...rest }: SvgProps) {
 
 /** Horizontal ornamental divider with a lotus at its heart. */
 export function FloralDivider({ className, ...rest }: SvgProps) {
+  const uid = useLotusIds()
   return (
-    <svg viewBox="0 0 320 36" className={className} fill="none" {...deco} {...rest}>
+    <svg viewBox="0 0 320 48" className={className} fill="none" overflow="visible" {...deco} {...rest}>
       <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M10 18 H112" strokeWidth="1" />
-        <path d="M208 18 H310" strokeWidth="1" />
-        <path d="M22 18 q8 -10 16 0 q8 10 16 0 q8 -10 16 0 q8 10 16 0" strokeWidth="1" opacity="0.7" transform="translate(0 0)" />
-        <path d="M218 18 q8 -10 16 0 q8 10 16 0 q8 -10 16 0 q8 10 16 0" strokeWidth="1" opacity="0.7" />
-        <circle cx="116" cy="18" r="2.2" fill="currentColor" />
-        <circle cx="204" cy="18" r="2.2" fill="currentColor" />
-        <g transform="translate(160 28)" strokeWidth="0.95">
-          <g transform="rotate(-40)">
-            <path d={lotusPetalD(18, 8)} fill="currentColor" fillOpacity="0.16" />
-          </g>
-          <g transform="rotate(40)">
-            <path d={lotusPetalD(18, 8)} fill="currentColor" fillOpacity="0.16" />
-          </g>
-          <g transform="rotate(-18)">
-            <path d={lotusPetalD(22, 7.4)} fill="currentColor" fillOpacity="0.26" />
-          </g>
-          <g transform="rotate(18)">
-            <path d={lotusPetalD(22, 7.4)} fill="currentColor" fillOpacity="0.26" />
-          </g>
-          <path d={lotusPetalD(26, 8.2)} fill="currentColor" fillOpacity="0.4" />
-          <ellipse cx="0" cy="-7" rx="4.2" ry="2.4" fill="currentColor" fillOpacity="0.5" />
-          <circle cx="0" cy="-7.4" r="0.75" fill="currentColor" stroke="none" />
-          <circle cx="-1.6" cy="-6.2" r="0.55" fill="currentColor" stroke="none" />
-          <circle cx="1.6" cy="-6.2" r="0.55" fill="currentColor" stroke="none" />
-        </g>
+        <path d="M10 24 H108" strokeWidth="1" />
+        <path d="M212 24 H310" strokeWidth="1" />
+        <path d="M22 24 q8 -10 16 0 q8 10 16 0 q8 -10 16 0 q8 10 16 0" strokeWidth="1" opacity="0.7" />
+        <path d="M218 24 q8 -10 16 0 q8 10 16 0 q8 -10 16 0 q8 10 16 0" strokeWidth="1" opacity="0.7" />
+        <circle cx="112" cy="24" r="2.2" fill="currentColor" />
+        <circle cx="208" cy="24" r="2.2" fill="currentColor" />
+      </g>
+      <g transform="translate(160 26) scale(0.26) translate(-120 -118)">
+        <GoldenLotusArtwork uid={uid} water={false} />
       </g>
     </svg>
   )

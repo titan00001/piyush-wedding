@@ -13,6 +13,7 @@ export const hi: Messages = {
   navAria: 'मुख्य मेनू',
   openMenu: 'मेनू खोलें',
   closeMenu: 'मेनू बंद करें',
+  names: { groomFirst: 'पीयूष', brideFirst: 'प्रिया', and: 'और' },
   hero: {
     omLabel: 'ॐ, मंगल स्मरण',
     celebrationsOf: 'विवाह समारोह',
@@ -120,6 +121,21 @@ export const hi: Messages = {
     receptionVenue: 'प्रीतिभोज स्थल',
     baraatLocation: 'बारात प्रारंभ स्थल',
     mapAria: (label, name) => `${label}: ${name}, गूगल मैप्स में खोलें (नए टैब में)`,
+  },
+  places: {
+    venues: {
+      aryaSamaj: 'आर्य समाज भवन',
+      royalBanquet: 'रॉयल बैन्क्वेट',
+      rajbariBanquet: 'राजबाड़ी बैन्क्वेट',
+    },
+    addresses: {
+      bidhanSarani: '19, बिधान सरणी, कोलकाता – 700006',
+      kalaberia: 'रिकजॉयनी, कालाबेरिया, कोलकाता – 700135 (राजारहाट)',
+      bechuChatterjee: '85, बेचू चटर्जी स्ट्रीट, कोलकाता – 700009',
+    },
+    landmarks: {
+      asterGarden: 'एस्टर गार्डन कॉम्प्लेक्स',
+    },
   },
   footer: {
     signoff: 'प्रेम सहित, आर्य और चौरसिया परिवार।',

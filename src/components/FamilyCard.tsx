@@ -2,6 +2,7 @@ import { Home } from 'lucide-react'
 import type { Family, FamilyPersonId } from '../config/wedding'
 import type { Messages } from '../i18n'
 import { useLanguage } from '../i18n/useLanguage'
+import { localizeDigits } from '../lib/numerals'
 import { FamilyEmblem, FloralCorner, FloralDivider } from './illustrations'
 
 function joinNames(ids: readonly FamilyPersonId[], t: Messages): string {
@@ -35,7 +36,7 @@ export function FamilyCard({ family }: { family: Family }) {
       <h3 id={id} className={`mt-1 text-maroon ${nameClass}`}>
         {headName}
       </h3>
-      <FloralDivider className="mx-auto my-4 h-7 w-56 text-gold" />
+      <FloralDivider className="mx-auto my-4 h-10 w-56 text-gold" />
 
       <dl className="m-0 grid gap-4">
         {rows.map((row) => (
@@ -46,12 +47,12 @@ export function FamilyCard({ family }: { family: Family }) {
         ))}
       </dl>
 
-      <FloralDivider className="mx-auto my-5 h-7 w-56 text-gold" />
+      <FloralDivider className="mx-auto my-5 h-10 w-56 text-gold" />
       <p className="mx-auto flex max-w-xs items-start justify-center gap-2 text-ink/90">
         <Home size={18} className="mt-1 shrink-0 text-burgundy" aria-hidden="true" />
         <span>
           <span className="sr-only">{t.families.address}</span>
-          {address}
+          {localizeDigits(address, t)}
         </span>
       </p>
     </article>

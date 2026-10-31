@@ -1,5 +1,4 @@
 import { CalendarDays, MapPin } from 'lucide-react'
-import { couple } from '../config/wedding'
 import { useLanguage } from '../i18n/useLanguage'
 import { CeremonyTimeline } from './CeremonyTimeline'
 import { Countdown } from './Countdown'
@@ -32,13 +31,20 @@ export function HeroSection() {
           </div>
           <p className="sr-only">{t.hero.omLabel}</p>
           <p className={`mt-3 text-sm font-semibold text-gold-dark ${eyebrowClass}`}>{t.hero.celebrationsOf}</p>
-          <h1 id="hero-title" className="mt-3 font-script text-[3.4rem] font-normal leading-[1.05] text-maroon sm:text-7xl lg:text-[4.75rem] xl:text-[5.5rem]">
-            {couple.groomFirst} <span className="text-gold">&amp;</span> {couple.brideFirst}
+          <h1
+            id="hero-title"
+            className={
+              lang === 'en'
+                ? 'mt-3 font-script text-[3.4rem] font-normal leading-[1.05] text-maroon sm:text-7xl lg:text-[4.75rem] xl:text-[5.5rem]'
+                : 'mt-3 font-serif text-[2.75rem] font-semibold leading-[1.15] text-maroon sm:text-6xl lg:text-[4.25rem] xl:text-[4.75rem]'
+            }
+          >
+            {t.names.groomFirst} <span className="text-gold">{t.names.and}</span> {t.names.brideFirst}
           </h1>
           <h2 className="mt-2 font-serif text-3xl font-medium italic text-burgundy sm:text-4xl">{t.hero.heading}</h2>
           <p className="mt-2 font-serif text-xl italic text-gold-dark sm:text-2xl">{t.hero.cordiallyInvited}</p>
 
-          <FloralDivider className="divider-draw mx-auto mt-4 h-8 w-64 text-gold" />
+          <FloralDivider className="divider-draw mx-auto mt-4 h-12 w-72 text-gold" />
 
           <p className="mt-4 font-serif text-3xl font-semibold text-maroon sm:text-4xl">{t.hero.datesDisplay}</p>
           <p className="mt-1 flex items-center justify-center gap-2 text-lg text-ink">
@@ -51,7 +57,7 @@ export function HeroSection() {
           <PaisleyDecoration className="absolute -left-2 bottom-8 h-20 w-12 text-gold sm:-left-8 sm:h-28 sm:w-16" />
           <PaisleyDecoration className="absolute -right-2 bottom-8 h-20 w-12 -scale-x-100 text-gold sm:-right-8 sm:h-28 sm:w-16" />
           <WeddingCoupleIllustration className="relative mx-auto h-auto w-full drop-shadow-[0_18px_28px_rgba(75,13,24,0.35)]" />
-          <LotusDecoration className="mx-auto -mt-1 h-20 w-24 text-gold" />
+          <LotusDecoration className="mx-auto -mt-1 h-28 w-44" />
         </div>
 
         <div className="hero-in text-center lg:col-start-1">

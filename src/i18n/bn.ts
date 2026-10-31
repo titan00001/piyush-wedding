@@ -13,6 +13,7 @@ export const bn: Messages = {
   navAria: 'প্রধান মেনু',
   openMenu: 'মেনু খুলুন',
   closeMenu: 'মেনু বন্ধ করুন',
+  names: { groomFirst: 'পিয়ূষ', brideFirst: 'প্রিয়া', and: 'ও' },
   hero: {
     omLabel: 'ॐ, মঙ্গল সূচনা',
     celebrationsOf: 'বিবাহ উৎসব',
@@ -120,6 +121,21 @@ export const bn: Messages = {
     receptionVenue: 'প্রীতিভোজের স্থান',
     baraatLocation: 'বরযাত্রা শুরুর স্থান',
     mapAria: (label, name) => `${label}: ${name}, গুগল ম্যাপে খুলুন (নতুন ট্যাবে)`,
+  },
+  places: {
+    venues: {
+      aryaSamaj: 'আর্য সমাজ ভবন',
+      royalBanquet: 'রয়্যাল ব্যানকুয়েট',
+      rajbariBanquet: 'রাজবাড়ি ব্যানকুয়েট',
+    },
+    addresses: {
+      bidhanSarani: '19, বিধান সরণি, কলকাতা – 700006',
+      kalaberia: 'রিকজয়নী, কালাবেড়িয়া, কলকাতা – 700135 (রাজারহাট)',
+      bechuChatterjee: '85, বেচু চ্যাটার্জী স্ট্রিট, কলকাতা – 700009',
+    },
+    landmarks: {
+      asterGarden: 'অ্যাস্টার গার্ডেন কমপ্লেক্স',
+    },
   },
   footer: {
     signoff: 'ভালোবাসাসহ, আর্য ও চৌরসীয়া পরিবার।',

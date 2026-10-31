@@ -4,6 +4,7 @@ import type { EventTheme, IllustrationKey, WeddingEvent } from '../config/weddin
 import { useLanguage } from '../i18n/useLanguage'
 import { downloadEventIcs, eventStartTime } from '../lib/calendar'
 import { formatClock, formatLongDate, formatSealDate } from '../lib/dates'
+import { localizedEventPlaces } from '../lib/places'
 import {
   BaraatIllustration,
   HaldiIllustration,
@@ -37,6 +38,7 @@ export function EventCard({ event }: { event: WeddingEvent }) {
   const seal = formatSealDate(event.dateISO, t)
   const titleId = `event-${event.id}`
   const calendarTime = eventStartTime(event)
+  const place = localizedEventPlaces(event, t)
 
   return (
     <article aria-labelledby={titleId} className="@container frame h-full overflow-hidden">
@@ -84,7 +86,7 @@ export function EventCard({ event }: { event: WeddingEvent }) {
                 <dd className="m-0">
                   <span className="block text-sm font-semibold uppercase tracking-wider text-gold-dark">{copy.baraatLabel}</span>
                   {event.baraatStart.time && <span className="block font-medium">{formatClock(event.baraatStart.time, t)}</span>}
-                  {event.baraatStart.address}
+                  {place.baraatAddress}
                 </dd>
               </div>
             )}
@@ -94,8 +96,8 @@ export function EventCard({ event }: { event: WeddingEvent }) {
               <MapPin size={20} className="mt-1 shrink-0 text-gold-dark" aria-hidden="true" />
               <dd className="m-0">
                 {event.baraatStart && <span className="block text-sm font-semibold uppercase tracking-wider text-gold-dark">{t.events.banquet}</span>}
-                <strong className="font-semibold text-maroon">{event.venue}</strong>
-                {event.addressLines.map((line) => (
+                <strong className="font-semibold text-maroon">{place.venue}</strong>
+                {place.addressLines.map((line) => (
                   <span key={line} className="block">
                     {line}
                   </span>
@@ -107,7 +109,7 @@ export function EventCard({ event }: { event: WeddingEvent }) {
               <div className="flex gap-3">
                 <dt className="sr-only">Landmark</dt>
                 <Landmark size={20} className="mt-1 shrink-0 text-gold-dark" aria-hidden="true" />
-                <dd className="m-0">{t.events.landmark(event.landmark)}</dd>
+                <dd className="m-0">{t.events.landmark(place.landmark ?? event.landmark)}</dd>
               </div>
             )}
           </dl>
