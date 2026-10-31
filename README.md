@@ -51,14 +51,14 @@ Headers in `public/_headers` are copied into `dist/` on build (security + long-c
 | Path | Purpose |
 | --- | --- |
 | `src/config/wedding.ts` | **All** names, dates, venues, addresses, map URLs, families. Edit facts here only. |
-| `src/i18n/` | English / Hindi / Bengali UI copy (event names, nav, share message). |
+| `src/i18n/` | English / Hindi / Bengali card wording (event names, honorifics, clocks, share lines). |
 | `src/components/illustrations/` | SVG components. Colours come from `palette.ts` → CSS variables in `src/index.css`. |
 | `src/components/` | Navbar, HeroSection, Countdown, WeddingEvents, EventCard, FamilySection, FamilyCard, VenueSection, Footer, LanguageSwitcher |
-| `src/lib/` | `dates.ts` (countdown + localized dates), `share.ts` (WhatsApp link) |
+| `src/lib/` | `dates.ts` (countdown + localized dates/clocks), `share.ts` (WhatsApp link), `calendar.ts` (per-event `.ics`) |
 | `wrangler.toml` | Cloudflare Worker name + `[assets]` → `dist` |
 
-Times for the Shaadi and Reception were not supplied, so none are shown. Add `time: '…'` to the event in `wedding.ts` when known.
-The countdown targets `2026-12-03T00:00:00+05:30` (start of the ceremony day, IST); change `countdownTarget` once a ceremony time is fixed.
+Shubh Vivah shows baraat departure at 6:00 PM (no separate ceremony time was on the card). Preeti Bhoj is 7:00 PM.
+The countdown targets `2026-12-03T18:00:00+05:30` (baraat departure, IST).
 
 ## Needs configuration before going live
 

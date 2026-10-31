@@ -8,7 +8,7 @@ export function ShareButton({ className = 'btn btn-outline' }: { className?: str
   return (
     <a
       className={className}
-      href={getWhatsAppShareHref(t.share.message)}
+      href={getWhatsAppShareHref(t)}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t.share.aria}

@@ -105,6 +105,7 @@ export function Garland({ d, width = 7, color = c.marigold }: { d: string; width
 export function Diya({ x, y, scale = 1 }: { x: number; y: number; scale?: number }) {
   return (
     <g transform={`translate(${x} ${y}) scale(${scale})`}>
+      <ellipse className="glow" cx="14" cy="-6" rx="12" ry="10" fill={c.turmeric} opacity={0.35} />
       <path className="flicker" d="M14 -1 C9 -7 12 -11 14 -16 C16 -11 19 -7 14 -1Z" fill={c.turmeric} />
       <path d="M14 -2 C12 -6 13 -8 14 -10 C15 -8 16 -6 14 -2Z" fill={c.ivory} opacity={0.9} />
       <path d="M0 2 C2 14 26 14 28 2 C22 5 6 5 0 2Z" fill={c.marigold} stroke={c.goldDark} strokeWidth={0.8} />
@@ -113,23 +114,145 @@ export function Diya({ x, y, scale = 1 }: { x: number; y: number; scale?: number
   )
 }
 
+/** Barrel drum for Mehendi & Sangeet. Origin at the drum centre. */
+export function Dholak({ x, y, scale = 1 }: { x: number; y: number; scale?: number }) {
+  return (
+    <g className="bob" transform={`translate(${x} ${y}) scale(${scale})`}>
+      <ellipse cx="0" cy="22" rx="15" ry="7" fill={c.skinDeep} stroke={c.goldDark} strokeWidth={0.8} />
+      <path
+        d="M-15 6 C-15 18 -9 22 0 22 C9 22 15 18 15 6 C15 -6 9 -10 0 -10 C-9 -10 -15 -6 -15 6Z"
+        fill={c.maroon}
+        stroke={c.goldDark}
+        strokeWidth={1}
+      />
+      {[-10, -5, 0, 5, 10].map((lx) => (
+        <path key={lx} d={`M${lx} -4 V18`} stroke={c.goldLight} strokeWidth={0.9} />
+      ))}
+      <ellipse cx="0" cy="6" rx="15" ry="7" fill={c.cream} stroke={c.goldDark} strokeWidth={1} />
+      <ellipse cx="0" cy="6" rx="9" ry="4" fill={c.blush} />
+      <path d="M-18 4 Q-28 -6 -22 -16" fill="none" stroke={c.goldDark} strokeWidth={1.6} strokeLinecap="round" />
+      <path d="M18 4 Q28 -6 22 -16" fill="none" stroke={c.goldDark} strokeWidth={1.6} strokeLinecap="round" />
+    </g>
+  )
+}
+
+/** Small shehnai (wedding pipe) held at an angle. Origin at the bell. */
+export function Shehnai({ x, y, scale = 1 }: { x: number; y: number; scale?: number }) {
+  return (
+    <g className="sway" transform={`translate(${x} ${y}) scale(${scale}) rotate(-28)`}>
+      <path d="M0 0 H52" stroke={c.gold} strokeWidth={3.2} strokeLinecap="round" />
+      <ellipse cx="0" cy="0" rx="7" ry="4.5" fill={c.goldLight} stroke={c.goldDark} strokeWidth={0.8} />
+      {[14, 24, 34].map((lx) => (
+        <circle key={lx} cx={lx} cy="0" r="1.4" fill={c.maroonDeep} />
+      ))}
+      <rect x="50" y="-2.4" width="8" height="4.8" rx="1.2" fill={c.goldDark} />
+    </g>
+  )
+}
+
 /* ------------------------------------------------------------------ */
 /* Stand-alone ornaments                                               */
 /* ------------------------------------------------------------------ */
 
-/** Lotus in bloom. Fill follows `color` (currentColor by default). */
-export function LotusDecoration({ className, ...rest }: SvgProps) {
-  const petal = 'M50 54 C37 42 37 18 50 3 C63 18 63 42 50 54Z'
+/** Full ovate lotus petal standing on (0,0), softly pointed tip at (0, −h). */
+function lotusPetalD(h: number, w: number) {
+  const n = (v: number) => Number(v.toFixed(2))
+  return [
+    `M0 0`,
+    `C${n(-w * 0.62)} ${n(-h * 0.16)} ${n(-w)} ${n(-h * 0.46)} ${n(-w * 0.38)} ${n(-h * 0.82)}`,
+    `Q0 ${n(-h)} ${n(w * 0.38)} ${n(-h * 0.82)}`,
+    `C${n(w)} ${n(-h * 0.46)} ${n(w * 0.62)} ${n(-h * 0.16)} 0 0Z`,
+  ].join(' ')
+}
+
+interface LotusPetalSpec {
+  rotate: number
+  h: number
+  w: number
+  opacity: number
+  vein?: boolean
+}
+
+function LotusPetal({ rotate, h, w, opacity, vein }: LotusPetalSpec) {
   return (
-    <svg viewBox="0 0 100 62" className={className} fill="none" {...deco} {...rest}>
-      <g stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round">
-        <path d={petal} fill="currentColor" fillOpacity="0.12" transform="rotate(-72 50 54) scale(0.8) translate(12.5 13.5)" />
-        <path d={petal} fill="currentColor" fillOpacity="0.12" transform="rotate(72 50 54) scale(0.8) translate(12.5 13.5)" />
-        <path d={petal} fill="currentColor" fillOpacity="0.18" transform="rotate(-38 50 54) scale(0.92) translate(4.3 4.7)" />
-        <path d={petal} fill="currentColor" fillOpacity="0.18" transform="rotate(38 50 54) scale(0.92) translate(4.3 4.7)" />
-        <path d={petal} fill="currentColor" fillOpacity="0.28" />
-        <path d="M50 50 C46 38 46 24 50 12 C54 24 54 38 50 50Z" fill="none" strokeWidth="0.8" />
-        <path d="M20 56 Q50 62 80 56" strokeLinecap="round" />
+    <g transform={`rotate(${rotate})`}>
+      <path d={lotusPetalD(h, w)} fill="currentColor" fillOpacity={opacity} />
+      {vein ? (
+        <path
+          d={`M0 ${(-h * 0.1).toFixed(2)} C${(-w * 0.1).toFixed(2)} ${(-h * 0.42).toFixed(2)} 0 ${(-h * 0.7).toFixed(2)} 0 ${(-h * 0.88).toFixed(2)}`}
+          fill="none"
+          strokeWidth="0.55"
+          opacity="0.42"
+        />
+      ) : null}
+    </g>
+  )
+}
+
+function LotusSeedPod({ cx, cy, rx, ry }: { cx: number; cy: number; rx: number; ry: number }) {
+  const seeds: Array<[number, number]> = [
+    [0, -ry * 0.42],
+    [-rx * 0.42, -ry * 0.18],
+    [rx * 0.42, -ry * 0.18],
+    [-rx * 0.22, ry * 0.08],
+    [rx * 0.22, ry * 0.08],
+    [-rx * 0.5, ry * 0.28],
+    [0, ry * 0.22],
+    [rx * 0.5, ry * 0.28],
+    [-rx * 0.22, ry * 0.52],
+    [rx * 0.22, ry * 0.52],
+  ]
+  return (
+    <g>
+      <ellipse cx={cx} cy={cy} rx={rx} ry={ry} fill="currentColor" fillOpacity="0.45" strokeWidth="1" />
+      <ellipse cx={cx} cy={cy - ry * 0.12} rx={rx * 0.72} ry={ry * 0.62} fill="none" strokeWidth="0.55" opacity="0.65" />
+      {seeds.map(([dx, dy]) => (
+        <circle key={`${dx}-${dy}`} cx={cx + dx} cy={cy + dy} r={Math.max(0.55, rx * 0.08)} fill="currentColor" stroke="none" />
+      ))}
+    </g>
+  )
+}
+
+/** Padma in bloom. Fill follows `color` (currentColor by default). */
+export function LotusDecoration({ className, ...rest }: SvgProps) {
+  const ox = 50
+  const oy = 70
+  const outer: LotusPetalSpec[] = [
+    { rotate: -56, h: 36, w: 16.5, opacity: 0.14 },
+    { rotate: -30, h: 48, w: 17, opacity: 0.18, vein: true },
+    { rotate: 30, h: 48, w: 17, opacity: 0.18, vein: true },
+    { rotate: 56, h: 36, w: 16.5, opacity: 0.14 },
+  ]
+  const mid: LotusPetalSpec[] = [
+    { rotate: -42, h: 34, w: 15, opacity: 0.24 },
+    { rotate: 42, h: 34, w: 15, opacity: 0.24 },
+  ]
+  const inner: LotusPetalSpec[] = [
+    { rotate: -14, h: 40, w: 14.5, opacity: 0.34, vein: true },
+    { rotate: 0, h: 54, w: 17.5, opacity: 0.44, vein: true },
+    { rotate: 14, h: 40, w: 14.5, opacity: 0.34, vein: true },
+  ]
+
+  return (
+    <svg viewBox="0 0 100 80" className={className} fill="none" {...deco} {...rest}>
+      <g stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" strokeLinecap="round">
+        <path d="M50 70 C40 68 30 60 26 50 C32 58 42 66 50 70Z" fill="currentColor" fillOpacity="0.12" />
+        <path d="M50 70 C60 68 70 60 74 50 C68 58 58 66 50 70Z" fill="currentColor" fillOpacity="0.12" />
+        <path d="M34 68 C42 74.5 58 74.5 66 68 C58 71.5 42 71.5 34 68Z" fill="currentColor" fillOpacity="0.18" />
+
+        <g transform={`translate(${ox} ${oy})`}>
+          {outer.map((p) => (
+            <LotusPetal key={`o${p.rotate}`} {...p} />
+          ))}
+          {mid.map((p) => (
+            <LotusPetal key={`m${p.rotate}`} {...p} />
+          ))}
+          {inner.map((p) => (
+            <LotusPetal key={`i${p.rotate}`} {...p} />
+          ))}
+        </g>
+
+        <LotusSeedPod cx={ox} cy={oy - 16} rx={11.5} ry={6.4} />
       </g>
     </svg>
   )
@@ -215,30 +338,72 @@ export function FloralDivider({ className, ...rest }: SvgProps) {
         <path d="M218 18 q8 -10 16 0 q8 10 16 0 q8 -10 16 0 q8 10 16 0" strokeWidth="1" opacity="0.7" />
         <circle cx="116" cy="18" r="2.2" fill="currentColor" />
         <circle cx="204" cy="18" r="2.2" fill="currentColor" />
-        <path d="M160 3 C148 10 146 24 160 33 C174 24 172 10 160 3Z" fill="currentColor" fillOpacity="0.22" strokeWidth="1.3" />
-        <path d="M160 33 C140 30 128 22 126 14 C140 14 152 20 160 33Z" fill="currentColor" fillOpacity="0.14" strokeWidth="1.2" />
-        <path d="M160 33 C180 30 192 22 194 14 C180 14 168 20 160 33Z" fill="currentColor" fillOpacity="0.14" strokeWidth="1.2" />
-        <circle cx="160" cy="19" r="2.4" fill="currentColor" />
+        <g transform="translate(160 28)" strokeWidth="0.95">
+          <g transform="rotate(-40)">
+            <path d={lotusPetalD(18, 8)} fill="currentColor" fillOpacity="0.16" />
+          </g>
+          <g transform="rotate(40)">
+            <path d={lotusPetalD(18, 8)} fill="currentColor" fillOpacity="0.16" />
+          </g>
+          <g transform="rotate(-18)">
+            <path d={lotusPetalD(22, 7.4)} fill="currentColor" fillOpacity="0.26" />
+          </g>
+          <g transform="rotate(18)">
+            <path d={lotusPetalD(22, 7.4)} fill="currentColor" fillOpacity="0.26" />
+          </g>
+          <path d={lotusPetalD(26, 8.2)} fill="currentColor" fillOpacity="0.4" />
+          <ellipse cx="0" cy="-7" rx="4.2" ry="2.4" fill="currentColor" fillOpacity="0.5" />
+          <circle cx="0" cy="-7.4" r="0.75" fill="currentColor" stroke="none" />
+          <circle cx="-1.6" cy="-6.2" r="0.55" fill="currentColor" stroke="none" />
+          <circle cx="1.6" cy="-6.2" r="0.55" fill="currentColor" stroke="none" />
+        </g>
       </g>
     </svg>
   )
 }
 
-/** Hanging toran of marigold flowers and pennants, for the top of a panel. */
+/** Hanging toran of marigolds and mango leaves, for the top of a panel. */
 export function Toran({ className, ...rest }: SvgProps) {
-  const flags = [30, 80, 130, 180, 230, 280, 330, 380, 430, 480, 530, 580]
+  const beads = Array.from({ length: 21 }, (_, i) => i)
   return (
-    <svg viewBox="0 0 600 70" preserveAspectRatio="none" className={className} fill="none" {...deco} {...rest}>
-      <path d="M0 6 Q150 30 300 6 Q450 30 600 6" stroke={c.gold} strokeWidth="2" />
-      {flags.map((x, i) => {
-        const y = 6 + Math.sin(((x % 300) / 300) * Math.PI) * 18 + (x % 300 === 0 ? 0 : 0)
+    <svg viewBox="0 0 640 78" className={className} fill="none" {...deco} {...rest}>
+      <path d="M0 10 Q160 32 320 10 Q480 32 640 10" stroke={c.gold} strokeWidth="2.2" />
+      <path d="M0 14 Q160 36 320 14 Q480 36 640 14" stroke={c.mango} strokeWidth="1.2" opacity="0.7" />
+      {beads.map((i) => {
+        const x = 16 + i * 30.4
+        const y = 10 + Math.sin((i / 20) * Math.PI) * 12
         return (
-          <g key={x} transform={`translate(${x} ${y})`}>
-            <path d="M-12 0 H12 L0 34Z" fill={i % 3 === 0 ? c.maroon : i % 3 === 1 ? c.marigold : c.rose} stroke={c.goldLight} strokeWidth="1" />
-            <circle cy="12" r="2.6" fill={c.goldLight} />
+          <g key={i} className="sway" style={{ animationDelay: `${(i % 7) * 0.18}s` }} transform={`translate(${x} ${y})`}>
+            {i % 2 === 0 ? (
+              <Marigold x={0} y={16} r={9} />
+            ) : (
+              <g transform="translate(0 8) rotate(180)">
+                <Leaf size={22} fill={c.mango} />
+              </g>
+            )}
           </g>
         )
       })}
+    </svg>
+  )
+}
+
+/** Auspicious ॐ mark for the head of an Arya Samaj invitation. */
+export function OmMark({ className, ...rest }: SvgProps) {
+  return (
+    <svg viewBox="0 0 72 72" className={className} fill="none" {...deco} {...rest}>
+      <circle cx="36" cy="36" r="33" stroke={c.gold} strokeWidth="1.4" />
+      <circle cx="36" cy="36" r="28" stroke={c.goldLight} strokeWidth="0.8" strokeDasharray="2 3" />
+      <text
+        x="36"
+        y="44"
+        textAnchor="middle"
+        fill={c.goldDark}
+        fontFamily="Tiro Devanagari Hindi, Cormorant Garamond, serif"
+        fontSize="32"
+      >
+        ॐ
+      </text>
     </svg>
   )
 }

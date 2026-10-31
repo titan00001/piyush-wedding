@@ -20,8 +20,8 @@ export function ReceptionIllustration(props: SVGProps<SVGSVGElement>) {
         return (
           <g key={x}>
             <path d={`M${x} ${y} v6`} stroke={c.goldLight} strokeWidth="1" />
-            <circle cx={x} cy={y + 10} r="4" fill={c.goldLight} opacity={i % 2 ? 0.95 : 0.7} />
-            <circle cx={x} cy={y + 10} r="8" fill={c.goldLight} opacity="0.14" />
+            <circle className="twinkle" style={{ animationDelay: `${(i % 6) * 0.22}s` }} cx={x} cy={y + 10} r="4" fill={c.goldLight} opacity={i % 2 ? 0.95 : 0.7} />
+            <circle className="glow" cx={x} cy={y + 10} r="8" fill={c.goldLight} opacity="0.14" />
           </g>
         )
       })}

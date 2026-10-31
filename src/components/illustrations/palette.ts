@@ -18,6 +18,8 @@ export const c = {
   sage: 'var(--color-sage, #8c9c7c)',
   sageLight: 'var(--color-sage-light, #dde5d0)',
   sageDeep: 'var(--color-sage-deep, #4f6144)',
+  mango: 'var(--color-mango, #5c7a38)',
+  sindoor: 'var(--color-sindoor, #b91c2e)',
   turmeric: 'var(--color-turmeric, #e0a526)',
   turmericLight: 'var(--color-turmeric-light, #f6e3a8)',
   marigold: 'var(--color-marigold, #e58a2b)',

@@ -14,10 +14,13 @@ export {
   Leaf,
   Garland,
   Diya,
+  Dholak,
+  Shehnai,
   LotusDecoration,
   PaisleyDecoration,
   Mandala,
   FloralCorner,
   FloralDivider,
   Toran,
+  OmMark,
 } from './Ornaments'

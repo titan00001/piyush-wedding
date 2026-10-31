@@ -1,18 +1,29 @@
 import { Home } from 'lucide-react'
-import type { Family } from '../config/wedding'
+import type { Family, FamilyPersonId } from '../config/wedding'
+import type { Messages } from '../i18n'
 import { useLanguage } from '../i18n/useLanguage'
 import { FamilyEmblem, FloralCorner, FloralDivider } from './illustrations'
+
+function joinNames(ids: readonly FamilyPersonId[], t: Messages): string {
+  return ids.map((id) => t.families.people[id]).join(` ${t.families.and} `)
+}
 
 export function FamilyCard({ family }: { family: Family }) {
   const { lang, t } = useLanguage()
   const id = `family-${family.side}`
   const sideLabel = family.side === 'bride' ? t.families.brideFamily : t.families.groomFamily
+  const lineage = t.families.lineage[family.side]
   const headName = t.families.people[family.personId]
   const address = t.families.addresses[family.side]
   const sideClass = lang === 'en' ? 'uppercase tracking-[0.3em]' : 'tracking-wide'
   const relationClass = lang === 'en' ? 'uppercase tracking-widest' : 'tracking-wide'
   // Pinyon Script is Latin-only; use the serif for Hindi / Bengali names.
   const nameClass = lang === 'en' ? 'font-script text-5xl font-normal' : 'font-serif text-4xl font-semibold sm:text-5xl'
+
+  const rows = [
+    { label: lineage.grandparents, names: joinNames(family.lineage.grandparents, t) },
+    { label: lineage.parents, names: joinNames(family.lineage.parents, t) },
+  ]
 
   return (
     <article aria-labelledby={id} className="frame relative h-full overflow-hidden px-6 pb-8 pt-10 text-center sm:px-10">
@@ -26,13 +37,11 @@ export function FamilyCard({ family }: { family: Family }) {
       </h3>
       <FloralDivider className="mx-auto my-4 h-7 w-56 text-gold" />
 
-      <dl className="m-0 grid gap-3">
-        {family.members.map((m) => (
-          <div key={m.id}>
-            <dt className={`text-sm font-semibold text-gold-dark ${relationClass}`}>
-              {t.families.relations[m.relation]}
-            </dt>
-            <dd className="m-0 font-serif text-2xl font-medium text-ink">{t.families.people[m.id]}</dd>
+      <dl className="m-0 grid gap-4">
+        {rows.map((row) => (
+          <div key={row.label}>
+            <dt className={`text-sm font-semibold text-gold-dark ${relationClass}`}>{row.label}</dt>
+            <dd className="m-0 font-serif text-2xl font-medium text-ink">{row.names}</dd>
           </div>
         ))}
       </dl>

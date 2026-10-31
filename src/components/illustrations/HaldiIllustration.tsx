@@ -42,9 +42,9 @@ export function HaldiIllustration(props: SVGProps<SVGSVGElement>) {
       <path d="M120 126 Q104 160 128 178" fill="none" stroke={c.ivory} strokeWidth="3" strokeLinecap="round" opacity="0.55" />
       <path d="M128 192 H192 L198 202 H122Z" fill={c.goldDark} />
       <ellipse cx="160" cy="118" rx="72" ry="14" fill={c.goldDark} />
-      <ellipse cx="160" cy="116" rx="68" ry="12" fill={c.turmeric} />
+      <ellipse className="ripple" cx="160" cy="116" rx="68" ry="12" fill={c.turmeric} />
       {/* paste mound */}
-      <path d="M100 116 C110 88 140 80 160 80 C182 80 212 88 220 116 C200 124 120 124 100 116Z" fill={c.turmeric} stroke={c.goldDark} strokeWidth="1" />
+      <path className="ripple" d="M100 116 C110 88 140 80 160 80 C182 80 212 88 220 116 C200 124 120 124 100 116Z" fill={c.turmeric} stroke={c.goldDark} strokeWidth="1" />
       <path d="M118 108 q14 -14 34 -16 M170 90 q22 4 36 18" fill="none" stroke={c.turmericLight} strokeWidth="2.4" strokeLinecap="round" opacity="0.8" />
       {/* spoon */}
       <path d="M192 96 L246 40" stroke={c.goldDark} strokeWidth="5" strokeLinecap="round" />

@@ -2,8 +2,7 @@
  * Single source of truth for every fact shown on the invitation.
  * Edit here; components only render what is defined below.
  * Display copy (English / Hindi / Bengali) lives in `src/i18n/`.
- * Nothing in this file is invented: anything not supplied by the families
- * (for example the time of the Shaadi and Reception) is left undefined.
+ * Nothing in this file is invented: facts come from the printed invitation card.
  */
 
 export type EventId = 'mehendi' | 'haldi' | 'shaadi' | 'reception'
@@ -19,17 +18,16 @@ export interface WeddingEvent {
   id: EventId
   /** Calendar date, YYYY-MM-DD (no timezone: it is a local calendar date in Kolkata). */
   dateISO: string
-  /** Display time exactly as supplied. Undefined when no time has been given. */
+  /** Display time exactly as supplied on the card, e.g. "7:00 PM". */
   time?: string
   venue: string
   addressLines: string[]
   landmark?: string
   /** Where the baraat sets off from (Shaadi only). */
-  baraatStart?: { address: string }
+  baraatStart?: { address: string; time?: string }
   illustration: IllustrationKey
   theme: EventTheme
   maps: MapLink[]
-  email?: string
 }
 
 export const site = {
@@ -44,12 +42,10 @@ export const couple = {
 } as const
 
 /**
- * Countdown target: the first moment of 3 December 2026 in India Standard Time
- * (the wedding ceremony day). No ceremony time was supplied, so the countdown
- * runs to the start of the day. The fixed +05:30 offset keeps it identical for
- * guests in any timezone.
+ * Countdown target: baraat departure on 3 December 2026, 6:00 PM IST.
+ * The fixed +05:30 offset keeps it identical for guests in any timezone.
  */
-export const countdownTarget = '2026-12-03T00:00:00+05:30'
+export const countdownTarget = '2026-12-03T18:00:00+05:30'
 export const countdownDateISO = '2026-12-03'
 
 const MAPS = {
@@ -60,14 +56,13 @@ const MAPS = {
 } as const
 
 const ARYA_SAMAJ = {
-  venue: 'Arya Samaj',
-  addressLines: ['Bidhan Sarani, Kolkata'],
+  venue: 'Arya Samaj Bhawan',
+  addressLines: ['19, Bidhan Sarani, Kolkata – 700006'],
   maps: [{ url: MAPS.arya_samaj }],
 }
 
-const KALABERIA_ADDRESS = ['Reekjoyoni, Kalaberia, Kolkata – 700135']
+const KALABERIA_ADDRESS = ['Reekjoyoni, Kalaberia, Kolkata – 700135 (Rajarhat)']
 const LANDMARK = 'Near Aster Garden Complex'
-const BANQUET_EMAIL = 'royalhotelandvilla@gmail.com'
 
 export const events: WeddingEvent[] = [
   {
@@ -81,7 +76,7 @@ export const events: WeddingEvent[] = [
   {
     id: 'haldi',
     dateISO: '2026-12-02',
-    time: '2:00 PM',
+    time: '11:00 AM',
     ...ARYA_SAMAJ,
     illustration: 'haldi',
     theme: 'turmeric',
@@ -93,17 +88,18 @@ export const events: WeddingEvent[] = [
     addressLines: KALABERIA_ADDRESS,
     landmark: LANDMARK,
     baraatStart: {
-      address: '85, Bechu Chatterjee Street, Kolkata',
+      time: '6:00 PM',
+      address: '85, Bechu Chatterjee Street, Kolkata – 700009',
     },
     illustration: 'baraat',
     theme: 'maroon',
     maps: [{ url: MAPS.baraat_start }, { url: MAPS.royal_banquet }],
-    email: BANQUET_EMAIL,
   },
   {
     id: 'reception',
     dateISO: '2026-12-06',
-    venue: 'Rajbari Rajarhat',
+    time: '7:00 PM',
+    venue: 'Rajbari Banquet',
     addressLines: KALABERIA_ADDRESS,
     landmark: LANDMARK,
     illustration: 'reception',
@@ -111,8 +107,6 @@ export const events: WeddingEvent[] = [
     maps: [{ url: MAPS.rajbari }],
   },
 ]
-
-export type FamilyRelation = 'Father' | 'Mother' | 'Grandfather' | 'Grandmother'
 
 export type FamilyPersonId =
   | 'priya-chaurasia'
@@ -126,17 +120,16 @@ export type FamilyPersonId =
   | 'late-raja-ram-arya'
   | 'kalawati-devi-arya'
 
-export interface FamilyMember {
-  id: FamilyPersonId
-  relation: FamilyRelation
-}
-
 export interface Family {
   side: 'bride' | 'groom'
   /** Localized via i18n `families.people`. */
   personId: FamilyPersonId
   monogram: string
-  members: FamilyMember[]
+  /** Card order: grandmother then grandfather; mother then father. */
+  lineage: {
+    grandparents: FamilyPersonId[]
+    parents: FamilyPersonId[]
+  }
 }
 
 export const families: { bride: Family; groom: Family } = {
@@ -144,23 +137,19 @@ export const families: { bride: Family; groom: Family } = {
     side: 'bride',
     personId: 'priya-chaurasia',
     monogram: 'C',
-    members: [
-      { id: 'garun-kumar-chaurasia', relation: 'Father' },
-      { id: 'ruby-chaurasia', relation: 'Mother' },
-      { id: 'hari-shankar-prasad-chaurasia', relation: 'Grandfather' },
-      { id: 'late-raj-kishori-devi', relation: 'Grandmother' },
-    ],
+    lineage: {
+      grandparents: ['late-raj-kishori-devi', 'hari-shankar-prasad-chaurasia'],
+      parents: ['ruby-chaurasia', 'garun-kumar-chaurasia'],
+    },
   },
   groom: {
     side: 'groom',
     personId: 'piyush-arya',
     monogram: 'A',
-    members: [
-      { id: 'ashok-kumar-arya', relation: 'Father' },
-      { id: 'surekha-arya', relation: 'Mother' },
-      { id: 'late-raja-ram-arya', relation: 'Grandfather' },
-      { id: 'kalawati-devi-arya', relation: 'Grandmother' },
-    ],
+    lineage: {
+      grandparents: ['kalawati-devi-arya', 'late-raja-ram-arya'],
+      parents: ['surekha-arya', 'ashok-kumar-arya'],
+    },
   },
 }
 
@@ -173,6 +162,7 @@ export type RepresentativeId =
   | 'tejas-arya'
   | 'sunil-chaurasia'
   | 'madhukar-chaurasia'
+  | 'entire-arya-family'
 
 export interface Representative {
   id: RepresentativeId
@@ -192,9 +182,10 @@ export const representatives: {
     { id: 'ayush-arya', phone: '9123719175' },
     { id: 'cyrush-arya', phone: '9123617202' },
     { id: 'shailendra-arya' },
-    { id: 'tejas-arya' },
     { id: 'sunil-chaurasia' },
     { id: 'madhukar-chaurasia' },
+    { id: 'tejas-arya' },
+    { id: 'entire-arya-family' },
   ],
 }
 
@@ -206,6 +197,4 @@ export const eventById = (id: EventId): WeddingEvent => {
   return found
 }
 
-/** Venues shown in the Venue section, derived from the events above. */
-export const venueEmail = BANQUET_EMAIL
 export const venueLandmark = LANDMARK

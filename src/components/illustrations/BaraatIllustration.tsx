@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react'
 import { c } from './palette'
-import { Diya, Flower, Garland, Mandala } from './Ornaments'
+import { Diya, Flower, Garland, Mandala, Shehnai } from './Ornaments'
 
 const HORSE = '#f7f0e2'
 const HORSE_SHADE = '#e0d3bb'
@@ -11,7 +11,7 @@ export function BaraatIllustration(props: SVGProps<SVGSVGElement>) {
     <svg
       viewBox="0 0 320 220"
       role="img"
-      aria-label="Illustration of the baraat: a groom in a turban riding a white horse decorated with a maroon and gold blanket"
+      aria-label="Illustration of the baraat: a groom in a turban riding a white horse, with a shehnai and festive bunting"
       {...props}
     >
       <Mandala x="60" y="-20" width="200" height="200" className="spin-slow" style={{ color: c.goldLight, opacity: 0.3 }} />
@@ -23,6 +23,8 @@ export function BaraatIllustration(props: SVGProps<SVGSVGElement>) {
         return (
           <path
             key={x}
+            className="flutter"
+            style={{ animationDelay: `${(i % 5) * 0.18}s` }}
             d={`M${x - 9} ${y} H${x + 9} L${x} ${y + 22}Z`}
             fill={[c.marigold, c.rose, c.goldLight][i % 3]}
             stroke={c.goldDark}
@@ -37,6 +39,9 @@ export function BaraatIllustration(props: SVGProps<SVGSVGElement>) {
       <Diya x={26} y={196} scale={0.8} />
       <Diya x={272} y={196} scale={0.8} />
 
+      <Shehnai x={18} y={168} scale={1.05} />
+
+      <g className="bob">
       {/* tail + back legs (far) */}
       <path d="M96 118 C70 126 62 152 70 184 C76 170 78 150 94 136Z" fill={c.hair} />
       <path d="M130 140 L128 196 H140 L146 150Z" fill={HORSE_SHADE} stroke={c.goldDark} strokeWidth="0.8" />
@@ -96,6 +101,7 @@ export function BaraatIllustration(props: SVGProps<SVGSVGElement>) {
         <path d="M133 50 Q132 28 150 25 Q168 28 167 50 Q150 42 133 50Z" fill={c.turmeric} stroke={c.goldDark} strokeWidth="1" />
         <path d="M134 44 Q150 34 166 44 M136 36 Q150 28 164 36" fill="none" stroke={c.goldDark} strokeWidth="0.9" opacity="0.7" />
         <path d="M150 34 c-4 -5 -3 -9 0 -12 c3 3 4 7 0 12z" fill={c.goldLight} stroke={c.goldDark} strokeWidth="0.6" />
+      </g>
       </g>
 
       {/* small flowers on the arch of the scene */}

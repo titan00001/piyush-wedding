@@ -46,7 +46,7 @@ export function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-gold/40 bg-ivory/90 backdrop-blur-md">
       <nav aria-label={t.navAria} className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-2 px-4 sm:h-16 sm:px-6">
-        <a href="#home" className="flex min-w-0 items-center gap-2 font-serif text-xl font-semibold text-maroon no-underline" onClick={() => setOpen(false)}>
+        <a href="#home" aria-label="Piyush & Priya" className="flex min-w-0 items-center gap-2 font-serif text-xl font-semibold text-maroon no-underline" onClick={() => setOpen(false)}>
           <CoupleMonogram
             aria-hidden="true"
             className="h-9 w-9 shrink-0 rounded-full border border-gold/70 shadow-sm"
@@ -54,7 +54,7 @@ export function Navbar() {
             primary="var(--color-maroon)"
             secondary="var(--color-blush-deep)"
           />
-          <span className="truncate font-script text-2xl font-normal">Piyush &amp; Priya</span>
+          <span className="hidden whitespace-nowrap font-script text-2xl font-normal lg:inline">Piyush &amp; Priya</span>
         </a>
 
         <ul className="hidden items-center gap-1 lg:flex">
@@ -73,12 +73,14 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-2">
-          <LanguageSwitcher className="hidden sm:inline-flex" />
+        <div className="flex shrink-0 items-center gap-2">
+          <div className="hidden lg:block">
+            <LanguageSwitcher />
+          </div>
           <button
             ref={buttonRef}
             type="button"
-            className="grid h-11 w-11 place-items-center rounded-full border border-gold text-maroon lg:hidden"
+            className="relative z-10 grid h-11 w-11 shrink-0 place-items-center rounded-full border border-gold bg-ivory text-maroon lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? t.closeMenu : t.openMenu}
@@ -90,7 +92,7 @@ export function Navbar() {
       </nav>
 
       <div id="mobile-menu" hidden={!open} className="border-t border-gold/30 bg-ivory lg:hidden">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 pt-3 sm:hidden">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 pt-3 lg:hidden">
           <LanguageSwitcher />
         </div>
         <ul className="mx-auto flex max-w-6xl flex-col px-4 py-2">

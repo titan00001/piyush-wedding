@@ -13,13 +13,14 @@ export function Footer() {
       <FloralCorner className="pointer-events-none absolute -left-3 -top-3 -z-10 h-32 w-32 opacity-70 sm:h-44 sm:w-44" />
       <FloralCorner className="pointer-events-none absolute -right-3 -top-3 -z-10 h-32 w-32 -scale-x-100 opacity-70 sm:h-44 sm:w-44" />
 
-      <LotusDecoration className="mx-auto h-12 w-24 text-gold-light" />
+      <LotusDecoration className="mx-auto h-20 w-24 text-gold-light" />
       <p className="mt-4 font-serif text-xl italic">{t.footer.signoff}</p>
-      <p className="mt-3 font-script text-6xl text-gold-light">
+      <p className="mt-3 px-2 font-script text-4xl leading-tight text-gold-light sm:text-6xl">
         {couple.groomFirst} &amp; {couple.brideFirst}
       </p>
       <p className="mt-1 font-serif text-2xl font-medium text-ivory">{t.hero.datesDisplay}</p>
       <FloralDivider className="mx-auto mt-4 h-8 w-64 text-gold-light" />
+      <p className="mt-3 font-serif text-xl italic text-gold-light">{t.footer.awaiting}</p>
 
       <nav aria-label={t.footer.aria} className="mt-4">
         <ul className="m-0 flex list-none flex-wrap justify-center gap-x-2 gap-y-1 p-0">

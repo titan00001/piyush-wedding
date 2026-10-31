@@ -24,7 +24,7 @@ export function SectionHeading({ id, eyebrow, title, children, onDark }: Props) 
       <h2 id={id} className={`text-4xl font-semibold sm:text-5xl ${onDark ? '!text-ivory' : ''}`}>
         {title}
       </h2>
-      <FloralDivider className={`mx-auto mt-4 h-8 w-64 ${onDark ? 'text-gold-light' : 'text-gold'}`} />
+      <FloralDivider className={`divider-draw mx-auto mt-4 h-8 w-64 ${onDark ? 'text-gold-light' : 'text-gold'}`} />
       {children && <p className={`mt-4 text-lg ${onDark ? 'text-cream' : 'text-ink/80'}`}>{children}</p>}
     </header>
   )

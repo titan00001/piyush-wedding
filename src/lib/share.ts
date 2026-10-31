@@ -1,3 +1,5 @@
+import type { Messages } from '../i18n'
+
 /**
  * The URL to share. Uses VITE_SITE_URL when configured, otherwise the address the
  * page is actually being served from (so once deployed, it is the real URL).
@@ -9,7 +11,10 @@ export function getShareUrl(): string {
   return `${window.location.origin}${window.location.pathname}`
 }
 
-export function getWhatsAppShareHref(message: string): string {
-  const text = `${message} ${getShareUrl()}`
-  return `https://wa.me/?text=${encodeURIComponent(text)}`
+export function buildShareMessage(t: Messages): string {
+  return [t.share.intro, '', t.share.body, '', t.share.linkLabel, getShareUrl(), '', t.share.closing].join('\n')
+}
+
+export function getWhatsAppShareHref(t: Messages): string {
+  return `https://wa.me/?text=${encodeURIComponent(buildShareMessage(t))}`
 }

@@ -1,8 +1,9 @@
 import type { ComponentType, SVGProps } from 'react'
-import { CalendarDays, Clock, Landmark, Mail, MapPin, Navigation } from 'lucide-react'
+import { CalendarDays, CalendarPlus, Clock, Landmark, MapPin, Navigation } from 'lucide-react'
 import type { EventTheme, IllustrationKey, WeddingEvent } from '../config/wedding'
 import { useLanguage } from '../i18n/useLanguage'
-import { formatLongDate, formatSealDate } from '../lib/dates'
+import { downloadEventIcs, eventStartTime } from '../lib/calendar'
+import { formatClock, formatLongDate, formatSealDate } from '../lib/dates'
 import {
   BaraatIllustration,
   HaldiIllustration,
@@ -35,11 +36,12 @@ export function EventCard({ event }: { event: WeddingEvent }) {
   const Art = illustrations[event.illustration]
   const seal = formatSealDate(event.dateISO, t)
   const titleId = `event-${event.id}`
+  const calendarTime = eventStartTime(event)
 
   return (
     <article aria-labelledby={titleId} className="@container frame h-full overflow-hidden">
       <div className="flex h-full flex-col @2xl:flex-row">
-        <div className={`relative shrink-0 ${theme.panel} px-4 pt-6 pb-4 @2xl:flex @2xl:w-5/12 @2xl:items-center ${theme.dark ? 'pattern-lattice-light' : 'pattern-lattice'}`}>
+        <div className={`relative max-h-56 shrink-0 overflow-hidden ${theme.panel} px-4 pt-5 pb-3 @2xl:flex @2xl:max-h-none @2xl:w-5/12 @2xl:items-center @2xl:pt-6 @2xl:pb-4 ${theme.dark ? 'pattern-lattice-light' : 'pattern-lattice'}`}>
           <Art className="mx-auto h-auto w-full max-w-[22rem]" />
           <div
             aria-hidden="true"
@@ -71,7 +73,7 @@ export function EventCard({ event }: { event: WeddingEvent }) {
               <div className="flex gap-3">
                 <dt className="sr-only">Time</dt>
                 <Clock size={20} className="mt-1 shrink-0 text-gold-dark" aria-hidden="true" />
-                <dd className="m-0 font-medium">{event.time}</dd>
+                <dd className="m-0 font-medium">{formatClock(event.time, t)}</dd>
               </div>
             )}
 
@@ -81,6 +83,7 @@ export function EventCard({ event }: { event: WeddingEvent }) {
                 <Navigation size={20} className="mt-1 shrink-0 text-gold-dark" aria-hidden="true" />
                 <dd className="m-0">
                   <span className="block text-sm font-semibold uppercase tracking-wider text-gold-dark">{copy.baraatLabel}</span>
+                  {event.baraatStart.time && <span className="block font-medium">{formatClock(event.baraatStart.time, t)}</span>}
                   {event.baraatStart.address}
                 </dd>
               </div>
@@ -107,21 +110,9 @@ export function EventCard({ event }: { event: WeddingEvent }) {
                 <dd className="m-0">{t.events.landmark(event.landmark)}</dd>
               </div>
             )}
-
-            {event.email && (
-              <div className="flex gap-3">
-                <dt className="sr-only">Venue email</dt>
-                <Mail size={20} className="mt-1 shrink-0 text-gold-dark" aria-hidden="true" />
-                <dd className="m-0 break-all">
-                  <a className="font-medium text-burgundy underline underline-offset-4" href={`mailto:${event.email}`}>
-                    {event.email}
-                  </a>
-                </dd>
-              </div>
-            )}
           </dl>
 
-          <div className="mt-auto flex flex-col gap-2 pt-2 sm:flex-row sm:flex-wrap">
+          <div className="mt-auto flex flex-row flex-wrap gap-2 pt-2">
             {event.maps.map((m, i) => {
               const label = copy.maps[i] ?? copy.maps[0]
               return (
@@ -130,7 +121,7 @@ export function EventCard({ event }: { event: WeddingEvent }) {
                   href={m.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`btn ${i === 0 ? 'btn-primary' : 'btn-outline'}`}
+                  className={`btn min-w-[min(100%,11rem)] flex-1 ${i === 0 ? 'btn-primary' : 'btn-outline'}`}
                   aria-label={t.venue.mapAria(label, copy.name)}
                 >
                   <Navigation size={18} aria-hidden="true" />
@@ -138,6 +129,17 @@ export function EventCard({ event }: { event: WeddingEvent }) {
                 </a>
               )
             })}
+            {calendarTime && (
+              <button
+                type="button"
+                className="btn btn-outline min-w-[min(100%,11rem)] flex-1"
+                onClick={() => downloadEventIcs(event, copy.name)}
+                aria-label={t.events.addToCalendarAria(copy.name)}
+              >
+                <CalendarPlus size={18} aria-hidden="true" />
+                {t.events.addToCalendar}
+              </button>
+            )}
           </div>
         </div>
       </div>

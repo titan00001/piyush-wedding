@@ -5,6 +5,7 @@ import { families, representatives } from '../config/wedding'
 import { useLanguage } from '../i18n/useLanguage'
 import { FamilyCard } from './FamilyCard'
 import { LotusDecoration, PaisleyDecoration } from './illustrations'
+import { Reveal } from './Reveal'
 import { SectionHeading } from './SectionHeading'
 
 function formatPhone(digits: string): string {
@@ -120,7 +121,7 @@ function NameList({ id, title, people }: { id: string; title: string; people: re
 
   return (
     <section aria-labelledby={id} className="frame px-6 py-8 text-center">
-      <LotusDecoration className="mx-auto h-9 w-16 text-gold" />
+      <LotusDecoration className="mx-auto h-14 w-16 text-gold" />
       <h3 id={id} className={`mt-2 text-maroon ${titleClass}`}>
         {title}
       </h3>
@@ -139,22 +140,32 @@ export function FamilySection() {
   return (
     <section id="families" aria-labelledby="families-title" className="bg-ivory px-5 py-16 sm:px-8 sm:py-24">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading id="families-title" eyebrow={t.families.eyebrow} title={t.families.title}>
-          {t.families.intro}
-        </SectionHeading>
+        <Reveal>
+          <SectionHeading id="families-title" eyebrow={t.families.eyebrow} title={t.families.title}>
+            {t.families.intro}
+          </SectionHeading>
+        </Reveal>
 
         <div className="grid gap-6 md:grid-cols-2">
-          <FamilyCard family={families.bride} />
-          <FamilyCard family={families.groom} />
+          <Reveal>
+            <FamilyCard family={families.bride} />
+          </Reveal>
+          <Reveal delay={80}>
+            <FamilyCard family={families.groom} />
+          </Reveal>
         </div>
 
         <div className="mt-14 grid gap-6 md:grid-cols-2">
-          <NameList id="rep-vineet" title={t.families.vineetTitle} people={representatives.vineet} />
-          <NameList
-            id="rep-darshanabhilashi"
-            title={t.families.darshanabhilashiTitle}
-            people={representatives.darshanabhilashi}
-          />
+          <Reveal>
+            <NameList id="rep-vineet" title={t.families.vineetTitle} people={representatives.vineet} />
+          </Reveal>
+          <Reveal delay={80}>
+            <NameList
+              id="rep-darshanabhilashi"
+              title={t.families.darshanabhilashiTitle}
+              people={representatives.darshanabhilashi}
+            />
+          </Reveal>
         </div>
       </div>
     </section>

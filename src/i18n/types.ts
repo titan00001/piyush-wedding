@@ -1,4 +1,4 @@
-import type { EventId, FamilyPersonId, FamilyRelation, RepresentativeId } from '../config/wedding'
+import type { EventId, FamilyPersonId, RepresentativeId } from '../config/wedding'
 
 export type Lang = 'en' | 'hi' | 'bn'
 
@@ -18,7 +18,9 @@ export interface Messages {
   openMenu: string
   closeMenu: string
   hero: {
+    omLabel: string
     celebrationsOf: string
+    cordiallyInvited: string
     heading: string
     invitation: string
     datesDisplay: string
@@ -33,20 +35,30 @@ export interface Messages {
     minutes: string
     seconds: string
     aria: (date: string) => string
-    remaining: (d: number, h: number, m: number) => string
+    remaining: (d: string, h: string, m: string) => string
   }
   share: {
     label: string
     aria: string
-    message: string
+    intro: string
+    body: string
+    linkLabel: string
+    closing: string
+  }
+  clock: {
+    am: (hm: string) => string
+    pm: (hm: string) => string
   }
   events: {
     eyebrow: string
     title: string
     intro: string
+    addToCalendar: string
+    addToCalendarAria: (name: string) => string
     byId: Record<EventId, EventCopy>
     banquet: string
     landmark: (place: string) => string
+    timelineAria: string
   }
   families: {
     eyebrow: string
@@ -54,7 +66,11 @@ export interface Messages {
     intro: string
     brideFamily: string
     groomFamily: string
-    relations: Record<FamilyRelation, string>
+    lineage: {
+      bride: { grandparents: string; parents: string }
+      groom: { grandparents: string; parents: string }
+    }
+    and: string
     address: string
     contactHint: string
     call: (name: string) => string
@@ -76,6 +92,7 @@ export interface Messages {
   }
   footer: {
     signoff: string
+    awaiting: string
     closing: string
     backToTop: string
     aria: string

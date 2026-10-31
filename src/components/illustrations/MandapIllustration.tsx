@@ -61,6 +61,7 @@ export function MandapIllustration(props: SVGProps<SVGSVGElement>) {
       {/* havan kund and fire */}
       <rect x="138" y="164" width="44" height="12" fill={c.goldLight} stroke={c.goldDark} strokeWidth="1" />
       <rect x="144" y="156" width="32" height="10" fill={c.marigold} stroke={c.goldDark} strokeWidth="1" />
+      <ellipse className="glow" cx="160" cy="142" rx="18" ry="16" fill={c.turmeric} opacity="0.35" />
       <path className="flicker" d="M160 156 C146 148 150 134 160 120 C170 134 174 148 160 156Z" fill={c.turmeric} />
       <path className="flicker" d="M160 154 C153 148 155 140 160 132 C165 140 167 148 160 154Z" fill={c.ivory} opacity="0.9" />
 

@@ -6,6 +6,7 @@
 @import '@fontsource/hind/400.css';
 @import '@fontsource/hind/500.css';
 @import '@fontsource/hind/600.css';
+@import '@fontsource/tiro-devanagari-hindi/400.css';
 @import '@fontsource/noto-sans-bengali/400.css';
 @import '@fontsource/noto-sans-bengali/500.css';
 @import '@fontsource/noto-sans-bengali/600.css';
@@ -29,16 +30,18 @@
   --color-sage: #8c9c7c;
   --color-sage-light: #dde5d0;
   --color-sage-deep: #4f6144;
+  --color-mango: #5c7a38;
+  --color-sindoor: #b91c2e;
   --color-ink: #3b1d22;
   --color-turmeric: #e0a526;
   --color-turmeric-light: #f6e3a8;
-  --color-marigold: #e58a2b;
+  --color-marigold: #ea8f22;
   --color-skin: #d8a07a;
   --color-skin-deep: #be845c;
 
-  --font-serif: 'Cormorant Garamond', 'Noto Sans Bengali', 'Times New Roman', serif;
-  --font-sans: 'Hind', 'Noto Sans Bengali', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-script: 'Pinyon Script', 'Snell Roundhand', cursive;
+  --font-serif: 'Cormorant Garamond', 'Tiro Devanagari Hindi', 'Noto Sans Bengali', 'Times New Roman', serif;
+  --font-sans: 'Hind', 'Tiro Devanagari Hindi', 'Noto Sans Bengali', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-script: 'Pinyon Script', 'Tiro Devanagari Hindi', 'Noto Sans Bengali', 'Snell Roundhand', cursive;
 }
 
 @layer base {
@@ -122,6 +125,7 @@
   }
 
   .btn {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -137,6 +141,7 @@
     text-align: center;
     text-decoration: none;
     cursor: pointer;
+    overflow: hidden;
     transition:
       background-color 0.2s,
       color 0.2s,
@@ -152,6 +157,21 @@
     background: var(--color-maroon);
     color: var(--color-ivory);
     box-shadow: inset 0 0 0 2px var(--color-maroon), inset 0 0 0 3px var(--color-gold-light);
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: -20% -50%;
+    background: linear-gradient(
+      115deg,
+      transparent 42%,
+      rgb(226 197 124 / 0.42) 50%,
+      transparent 58%
+    );
+    transform: translateX(-60%);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .btn-primary:hover {
@@ -213,7 +233,7 @@
   }
 }
 
-/* One quiet, ambient motion: a slow turn of the mandala behind the couple. */
+/* Quiet, ambient motion. All of it is gated on prefers-reduced-motion. */
 @media (prefers-reduced-motion: no-preference) {
   .spin-slow {
     animation: spin-slow 120s linear infinite;
@@ -227,14 +247,85 @@
     transform-box: fill-box;
   }
 
+  .glow {
+    animation: glow 2.6s ease-in-out infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+
   .sway {
     animation: sway 7s ease-in-out infinite;
     transform-origin: 50% 0%;
     transform-box: fill-box;
   }
 
+  .bob {
+    animation: bob 3.2s ease-in-out infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+
+  .flutter {
+    animation: flutter 3s ease-in-out infinite;
+    transform-origin: 50% 0%;
+    transform-box: fill-box;
+  }
+
+  .twinkle {
+    animation: twinkle 2.4s ease-in-out infinite;
+  }
+
+  .ripple {
+    animation: ripple 4.5s ease-in-out infinite;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+
   .hero-in {
     animation: hero-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  .reveal-in {
+    animation: hero-in 0.75s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal-in .divider-draw {
+    transform-origin: center;
+    animation: divider-draw 0.9s ease both;
+    animation-delay: var(--reveal-delay, 0ms);
+  }
+
+  .countdown-tick {
+    animation: tick 0.35s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .petal {
+    animation-name: petal-fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  .btn-primary:hover::before {
+    opacity: 1;
+    animation: shimmer 0.9s ease;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  .petal {
+    display: none;
   }
 }
 
@@ -279,6 +370,111 @@
     opacity: 1;
     transform: none;
   }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    opacity: 0.22;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.18);
+  }
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes flutter {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes ripple {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes divider-draw {
+  from {
+    opacity: 0;
+    transform: scaleX(0.42);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes tick {
+  from {
+    opacity: 0.35;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes petal-fall {
+  0% {
+    transform: translate3d(0, -16px, 0) rotate(0deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate3d(var(--drift, 16px), 640px, 0) rotate(360deg);
+    opacity: 0.12;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    transform: translateX(-60%);
+  }
+  to {
+    transform: translateX(60%);
+  }
+}
+
+.petal {
+  position: absolute;
+  top: -14px;
+  display: block;
+  border-radius: 80% 0 70% 20%;
+  opacity: 0.75;
 }
 
 .sr-only-focusable:not(:focus):not(:focus-within) {
