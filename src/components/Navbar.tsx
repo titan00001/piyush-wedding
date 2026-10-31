@@ -75,10 +75,8 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="flex shrink-0 items-center gap-2">
-          <div className="hidden lg:block">
-            <LanguageSwitcher />
-          </div>
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+          <LanguageSwitcher />
           <button
             ref={buttonRef}
             type="button"
@@ -94,9 +92,6 @@ export function Navbar() {
       </nav>
 
       <div id="mobile-menu" hidden={!open} className="border-t border-gold/30 bg-ivory lg:hidden">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 pt-3 lg:hidden">
-          <LanguageSwitcher />
-        </div>
         <ul className="mx-auto flex max-w-6xl flex-col px-4 py-2">
           {navIds.map((id) => (
             <li key={id}>

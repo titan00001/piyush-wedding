@@ -17,8 +17,6 @@ export const en: Messages = {
   hero: {
     omLabel: 'Om, the auspicious invocation',
     celebrationsOf: 'The wedding celebrations of',
-    cordiallyInvited: 'Cordially invited',
-    heading: 'Together Forever',
     invitation:
       'With immense joy and love, we invite you to be a part of our wedding celebrations as we begin our journey together.',
     datesDisplay: '1–6 December 2026',

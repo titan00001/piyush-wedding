@@ -21,8 +21,6 @@ export interface Messages {
   hero: {
     omLabel: string
     celebrationsOf: string
-    cordiallyInvited: string
-    heading: string
     invitation: string
     datesDisplay: string
     location: string

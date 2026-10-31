@@ -41,8 +41,6 @@ export function HeroSection() {
           >
             {t.names.groomFirst} <span className="text-gold">{t.names.and}</span> {t.names.brideFirst}
           </h1>
-          <h2 className="mt-2 font-serif text-3xl font-medium italic text-burgundy sm:text-4xl">{t.hero.heading}</h2>
-          <p className="mt-2 font-serif text-xl italic text-gold-dark sm:text-2xl">{t.hero.cordiallyInvited}</p>
 
           <FloralDivider className="divider-draw mx-auto mt-4 h-12 w-72 text-gold" />
 

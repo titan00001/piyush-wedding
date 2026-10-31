@@ -17,8 +17,6 @@ export const hi: Messages = {
   hero: {
     omLabel: 'ॐ, मंगल स्मरण',
     celebrationsOf: 'विवाह समारोह',
-    cordiallyInvited: 'सादर आमंत्रण',
-    heading: 'सदा साथ',
     invitation:
       'अत्यंत हर्ष और प्रेम के साथ, हम आपको हमारे विवाह समारोह का हिस्सा बनने के लिए आमंत्रित करते हैं, जब हम एक साथ अपनी नई यात्रा आरंभ कर रहे हैं।',
     datesDisplay: '१–६ दिसंबर २०२६',
